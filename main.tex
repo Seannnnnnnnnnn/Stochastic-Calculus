@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{natbib} 
+\usepackage{tcolorbox} 
+
+\begin{document}
+
+% Cover Page
+\begin{titlepage}
+    \centering
+    {\Huge \textbf{Stochastic Calculus}}\\[1.5cm] % Title
+    \textbf{Author:} Sean Conlon\\[1cm] % Replace 'Your Name' with your actual name
+    \textbf{Date:} \today\\[3cm] % Automatically inserts today's date
+    
+    \section*{About}
+    This document is a collection of exercises and proofs for problems in Stochastic Calculus. The exercises are primarily sourced from the University of Melbourne's \texttt{MAST90059}, though also taken from other relevant textbooks. Any mistakes are entirely my own, though please email me at \texttt{sc.[first].[last]@gmail.com}\\[2cm]
+
+    % Table of Contents
+    \tableofcontents
+    
+\end{titlepage}
+
+% Example sections (these will appear in the table of contents)
+\newpage
+\section{Ordinary Calculus}
+
+\newpage
+\section{Probability \& Measure Fundamentals}
+Definition and properties of Brownian motion.
+
+\newpage
+\section{Brownian Motion}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $B_t$ denote a standard Brownian Motion. Which of the following are also Brownian Motion? \cite{Fima}
+\begin{enumerate}
+    \item $X_t = -B_t$
+    \item $X_t = tB_{\frac{1}{t}}$
+    \item $X_t = B_{2t} - B_t$
+\end{enumerate} 
+\vspace{0.2cm}\hrule\vspace{0.2cm}
+\textbf{Answer:} Brownian motion is a continuous-time stochastic process \( B_t \) that satisfies the following properties: 
+\begin{enumerate}
+    \item \( B_0 = 0 \).
+    \item \( B_t \) has independent increments.
+    \item \( B_t - B_s \sim \mathcal{N}(0, t-s) \) for \( s < t \).
+    \item \( B_t \) has continuous paths almost surely.
+\end{enumerate}
+\end{tcolorbox}
+
+
+
+
+
+\newpage
+\bibliographystyle{plain} 
+\bibliography{references}  % Assumes a references.bib file
+
+\end{document}
