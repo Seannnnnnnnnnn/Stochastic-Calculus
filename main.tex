@@ -3,6 +3,8 @@
 \usepackage{hyperref}
 \usepackage{natbib} 
 \usepackage{tcolorbox} 
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 \begin{document}
 
@@ -14,7 +16,7 @@
     \textbf{Date:} \today\\[3cm] % Automatically inserts today's date
     
     \section*{About}
-    This document is a collection of exercises and proofs for problems in Stochastic Calculus. The exercises are primarily sourced from the University of Melbourne's \texttt{MAST90059}, though also taken from other relevant textbooks. Any mistakes are entirely my own, though please email me at \texttt{sc.[first].[last]@gmail.com}\\[2cm]
+    This document is a collection of exercises and proofs for problems in Stochastic Calculus. The exercises are primarily sourced from the University of Melbourne's \texttt{MAST90059 Stochastic Calculus} subject, though some are also taken from other relevant textbooks. Any mistakes are entirely my own. Please email me at \texttt{sc.[first].[last]@gmail.com} for any questions or amendments.\\[2cm]
 
     % Table of Contents
     \tableofcontents
@@ -27,31 +29,99 @@
 
 \newpage
 \section{Probability \& Measure Fundamentals}
-Definition and properties of Brownian motion.
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Suppose $(X,Y)$ has the following joint distribution
+$$f_{X,Y}(x,y) = \frac{1}{2\pi\sqrt{1-\rho^2}}\exp\left(\frac{x^2 - 2\rho xy + y^2}{2(1-\rho^2)}\right)\quad x\in\mathbb{R},y\in\mathbb{R}$$
+Find and interperate the Marginal distributions. [UniMelb]
+\end{tcolorbox}
+\textbf{Solution.} The critical observation is to factor the numerator in the exponent. We rewrite $$x^2 -2\rho xy + y^2 = (x-\rho y)^2 + (1-\rho^2)y^2$$
+We can now rewrite the density function as
+$$f_{X,Y}(x,y) = \frac{1}{2\pi\sqrt{1-\rho^2}}\exp\left(\frac{(x-\rho y)^2}{2(1-\rho^2)} - \frac{y^2}{2}\right)$$
+We now integrate
+\begin{align*}
+    f_Y(y) &= \int_{X} f_{X,Y}dx \\
+    &= \frac{1}{\sqrt{2\pi}}e^{-y^2/2}\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi(1-\rho^2)}}\exp\left(\frac{(x-\rho y)^2}{2(1-\rho^2)}\right)dx \\
+    &\stackrel{d}{=} N(0,1)
+\end{align*} 
+
 
 \newpage
 \section{Brownian Motion}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that $2B_{t} - B_s$ is not independent of $B_s$. \cite{Fima}
+\end{tcolorbox}
+\textit{Proof.} There are many ways to prove this, though our approach will show that $E[(2B_t-B_s)B_s]\neq E[2B_t-B_s] E[B_s]$ to include that the two terms are not independent. We have: 
+\begin{align*}
+    E[(2B_t-B_s)B_s] &= E[2B_tB_s - B_s^2] \\
+    &= 2E[B_t B_s] - s
+\end{align*}
+Without loss of generality, we assume that $s<t$. We then apply the usual identity $B_t = B_s + (B_t - B_s)$ to the first term. This yields
+\begin{align*}
+    E[B_t B_s] &= E[(B_s + (B_t - B_s))B_s] \\
+    &=E[B_s^2] + E[B_s(B_t - B_s)] \\
+    &= s
+\end{align*}
+The last term is obtained by noting that $B_s \perp B_{t} - B_s$ (Independant Increments). We then substitute this into our orignal equation to see that 
+$$E[(2B_t-B_s)B_s] = s \neq E[2B_t-B_s]E[B_s] \hspace{10mm} \Box$$
+
+\vspace{2mm}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find $P(B_t\leq0\text{ for } t=0,1,2)$ \cite{Fima}
+\end{tcolorbox}
+\textbf{Solution:} We assume standard Brownian Motion, so $B_0=0$. The problem is now to find $P(B_1\leq0, B_2\leq0)$.
+
+
+\vspace{2mm}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $B_t$ denote a standard Brownian Motion. Which of the following are also Brownian Motion? \cite{Fima}
 \begin{enumerate}
     \item $X_t = -B_t$
-    \item $X_t = tB_{\frac{1}{t}}$
     \item $X_t = B_{2t} - B_t$
 \end{enumerate} 
-\vspace{0.2cm}\hrule\vspace{0.2cm}
-\textbf{Answer:} Brownian motion is a continuous-time stochastic process \( B_t \) that satisfies the following properties: 
-\begin{enumerate}
-    \item \( B_0 = 0 \).
-    \item \( B_t \) has independent increments.
-    \item \( B_t - B_s \sim \mathcal{N}(0, t-s) \) for \( s < t \).
-    \item \( B_t \) has continuous paths almost surely.
-\end{enumerate}
 \end{tcolorbox}
 
+\textbf{Solution:}\\
+1) $X_t = -B_t$ defines a Brownian Motion. We can verify directly from the definition: 
+\begin{itemize}
+    \item (Indep. Increments). $X_t - X_s = -(B_t - B_s)$ which is independent of $X_u$ for $0\leq u <s$ from the definition of Brownian Motion. 
+    \item (Normal Increments) $X_t - X_s = -(B_t - B_s) \sim N(0, t-s)$
+    \item (Continuous Paths) $X_t$ is clearly continuous.
+\end{itemize}
+2) $X_t = t B_{1/t}$ also defines a Brownian Motion.
 
+\vspace{2mm}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find $\mathbb{P}(\int_0^1B_tdt > 2/\sqrt{3})$ \cite{Fima}
+\end{tcolorbox}
+\textbf{Solution:} $\mathbb{P}(\int_0^1B_tdt > 2/\sqrt{3}) = 1-\mathbb{P}(\int_0^1B_tdt \leq 2/\sqrt{3})$. From here, we see that if we can identify the distribution of $\int_{0}^{1}B_tdt$ then we we are pretty much done. To so so, we can approximate the integral by partitioning the interval into $0<t_1<t_2<\dots<1$, then
+$$\int_{0}^{1}B_t dt \approx \sum_{i=1}^{n}B_{t_i}\Delta_{t_i} = \sum_{i=1}^{n}B_{t_i}(t_{i}-t_{_{i-t}})$$
+We recall that $B_t$ is a Gaussian Process, and thus $\sum_iB_{t_i}\Delta_{t_i}$ is a linear combination of Gaussian processes and is therefore also a Gaussian Process. Finally we note that under taking the limit 
+$$\lim_{\Delta\to0}\sum_{i=1}B_{t_i}\Delta_{t_i} = \int_{0}^{1}B_t dt$$
+the limiting process is also Gaussian with equal mean. So far, we have $\int_{0}^{1}B_tdt\sim N(0, \sigma^2)$. To find the variance we consider
+\begin{align*}
+    \text{Var}\left(\int_{0}^{1}B_tdt\right) &= \text{Cov}\left(\int_{0}^{1}B_tdt\int_{0}^{1}B_sds\right) \\
+    &= \mathbb{E}\left(\int_{0}^{1}B_tdt\int_{0}^{1}B_sds\right) \\
+    &=\int_{0}^{1}\int_{0}^{1}\mathbb{E}[B_t B_s]dtds \hspace{10mm} \text{(Fubini)}\\
+    &= \int_{0}^{1}\int_{0}^{1}\min(s, t)dtds
+\end{align*}
+To examine the integral, notice that the integral runs from $[0,t]$ when $s<t$ and $[0,s]$ when $t<s$. Drawing this out shows that they occupy the same area. Thus, 
+\begin{align*}
+    \int_{0}^{1}\int_{0}^{1}\min(s, t)dtds &= \int_{0}^{1}\int_{0}^{t}sdsdt + \int_{0}^{1}\int_{0}^{s}tdtds \\
+    &= 2\int_{0}^{1}\int_{0}^{t}sdsdt \\
+    &= \frac{1}{3}
+\end{align*}
+We conclude $\int_{0}^{1}B_tdt\sim N(0, 1/3)$.
 
+\vspace{2mm}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find the distribution of $B_t + B_s$ where $s < t$.
+\end{tcolorbox}
 
 \newpage
 \bibliographystyle{plain} 
