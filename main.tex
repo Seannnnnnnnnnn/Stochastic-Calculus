@@ -16,7 +16,7 @@
     \textbf{Date:} \today\\[3cm] % Automatically inserts today's date
     
     \section*{About}
-    This document is a collection of exercises and proofs for problems in Stochastic Calculus. The exercises are primarily sourced from the University of Melbourne's \texttt{MAST90059 Stochastic Calculus} subject, though some are also taken from other relevant textbooks. Any mistakes are entirely my own. Please email me at \texttt{sc.[first].[last]@gmail.com} for any questions or amendments.\\[2cm]
+    This document is a collection of exercises and solutions for problems in Stochastic Calculus. The exercises are primarily sourced from the University of Melbourne's \texttt{MAST90059 Stochastic Calculus} subject, though some are also taken from other relevant textbooks. Any mistakes are entirely my own. Please email me at \texttt{sc.[first].[last]@gmail.com} for any questions or amendments.\\[2cm]
 
     % Table of Contents
     \tableofcontents
@@ -29,6 +29,11 @@
 
 \newpage
 \section{Probability \& Measure Fundamentals}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} For a random variable $X\geq0$ show that $\mathbb{E}[X] = \int_{0}^{\infty}P(X\geq x)dx$
+\end{tcolorbox}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Suppose $(X,Y)$ has the following joint distribution
@@ -122,6 +127,42 @@ We conclude $\int_{0}^{1}B_tdt\sim N(0, 1/3)$.
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find the distribution of $B_t + B_s$ where $s < t$.
 \end{tcolorbox}
+\textbf{Solution.} It is important to note that $B_t$ is not independent of $B_s$ so we can't simply sum them as if they were independent normal variables. Instead 
+\begin{align*}
+    B_t + B_s = B_s + (B_t - B_s) + B_s &= 2B_s + (B_t-B_s) \\
+    &\stackrel{d}{=}N(0, 4s) + N(0, t-s) \\
+    &\stackrel{d}{=}N(0, t + 3s)
+\end{align*}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $B_t$ and $W_t$ be two independant Brownian Motions. Show that the process $X_t = \frac{B_t + W_t}{\sqrt{2}}$ also defines a Brownian Motion. Find the correlation between $X_t$ and $B_t$. 
+\end{tcolorbox}
+\textbf{Solution.} It is straightforward to verify that $X_t$ is a Brownian Motion. To find the correlation recall that 
+$$\text{Corr}(X_t, B_t) = \frac{\text{Cov}(X_t, B_t)}{\sqrt{\text{Var($X_t$)}}\sqrt{\text{Var($B_t$)}}} = \frac{\text{Cov}(X_t, B_t)}{t}$$
+To find the covariance of the two processes
+\begin{align*}
+    \text{Cov}(X_t ,B_t) &= \frac{1}{\sqrt{2}}(\text{Cov}(W_t, B_t) + \text{Cov}(B_t, B_t))  \\
+    &= \sqrt{2}t
+\end{align*}
+From here, we conclude Corr$(X_t, B_t) = \sqrt{2}$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Prove that $B_t$ is nowhere differentiable a.s. [UniMelb]  
+\end{tcolorbox}
+\textbf{Proof.} We begin by noting 
+\begin{align*}
+    \frac{B_{t+\delta} - B_t}{\delta} \stackrel{d}{=} \frac{\sqrt{\delta} Z}{\delta} \stackrel{d}{=} \frac{Z}{\sqrt{\delta}}
+\end{align*}
+It is now clear that for any $K > 0$ fixed
+\begin{align*}
+    \mathbb{P}\left(\left|\frac{Z}{\sqrt{\delta}}\right| > K \right) =1 \quad \text{as } \quad \delta\to0. 
+\end{align*}
+Thus with probability 1, we conclude that $B_t$ is nowhere differentiable. $\square$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Fractal Scaling Property of Brownian Motion) Show that for any fixed $a>0$  the process $X_t = aB_{t/a^2}$ is itself a Brownian Motion.  
+\end{tcolorbox}
+
 
 \newpage
 \bibliographystyle{plain} 
