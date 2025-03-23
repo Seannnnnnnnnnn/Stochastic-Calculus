@@ -28,12 +28,44 @@
 \section{Ordinary Calculus}
 
 \newpage
-\section{Probability \& Measure Fundamentals}
+\section{Probability \& Measure Theory Fundamentals}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} For a random variable $X\geq0$ show that $\mathbb{E}[X] = \int_{0}^{\infty}P(X\geq x)dx$
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} For $X\geq0$ We have 
+\begin{align*}
+    E[X] = \int_{0}^{\infty}xf(x)dx &= \int_{0}^{\infty} x dF(x) \\
+    &= \int_{0}^{\infty}\int_{0}^{x}dtdF(x)
+\end{align*}
+We now wish to apply Fubini's theorem to change the order of integration. Notice that the region of integration runs over $0\leq t\leq x<\infty$ so after applying Fubini's theorem
+\begin{align*}
+    \int_{0}^{\infty}\int_{0}^{x}dtdF(x) &= \int_{0}^{\infty}\int_{x}^{\infty}dF(x)dt \\
+    &=\int_{0}^{\infty}(1 - F(t))dt \\
+    &= \int_{0}^{\infty} P(X\geq t)dt \hspace{10mm}
+    \square\\
+\end{align*}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (A common misconception) Show that two normally distributed and uncorrelated random variables are not necessarily independent. 
+\end{tcolorbox}
+\textbf{Proof.} Let $Z_1,Z_2\stackrel{iid}{\sim}N(0,1)$ and define $X = Z_1 + Z_2$ and  $Y = Z_1 - Z_2$. One verifies 
+\begin{align*}
+    \text{Cov}(X_, Y) = E[XY] &= E[Z_1^2 -Z_2^2] \\
+    &= 0.
+\end{align*}
+So it is clear that $X$ and $Y$ are uncorrelated. We now wish to show that they are not independent. To derive the joint distribution of $X,Y$ we first consider the joint distribution of $Z_1, Z_2$ then apply a change of variables. As $Z_i$ are \textit{iid} their joint distribution is simply the product of the marginal distributions. That is
+$$f_{Z_1, Z_2}(z_1, z_2) = \frac{1}{2\pi}e^{-\frac{1}{2}(z_1^2 + z_2^2)}.$$
+Given the definitions of $X$ and $Y$ we now apply the change of variables 
+$$Z_1 = \frac{X+Y}{2} \hspace{5mm} Z_2 = \frac{X-Y}{2}$$
+One now considers 
+\begin{align*}
+    f_{X,Y}(x, y) &= f_{Z_1, Z_2}\left(\frac{x+y}{2}, \frac{x-y}{2}\right) \\
+    &= \frac{1}{2\pi}e^{-\frac{1}{4}(x^2 + y^2)}.
+\end{align*}
+To verify that they are not independent, we now check the marginal distributions. 
+
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Suppose $(X,Y)$ has the following joint distribution
@@ -49,6 +81,17 @@ We now integrate
     &= \frac{1}{\sqrt{2\pi}}e^{-y^2/2}\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi(1-\rho^2)}}\exp\left(\frac{(x-\rho y)^2}{2(1-\rho^2)}\right)dx \\
     &\stackrel{d}{=} N(0,1)
 \end{align*} 
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $T$ be a stopping time of the filtration $\mathcal{F}_t$. Define 
+$$\mathcal{F}_T := \{A\in\mathcal{F}_t : A\cap\{T\leq t\}\in\mathcal{F}_t\}$$
+Prove that $\mathcal{F}_T$ is a $\sigma$-algebra and $T$ is $\mathcal{F}_T$-measurable.
+\end{tcolorbox}
+\textbf{Proof.} To see that $\mathcal{F}_T$ is a $\sigma$-Algebra: 
+\begin{enumerate}
+    \item (Contains $\Omega$). Since $\Omega\in\mathcal{F}_t$ be definition and $\Omega \cap\{T\leq t\} = \{T\leq t\}\in\mathcal{F}_t$ we conclude that $\Omega\in\mathcal{F}_T$. 
+    \item (Closure Under Compliments). Suppose $A\in\mathcal{F}_T$. Then $A^c\cap\{T\leq t\} = \{T\leq t\}\backslash A $
+\end{enumerate}
 
 
 \newpage
@@ -141,10 +184,10 @@ We conclude $\int_{0}^{1}B_tdt\sim N(0, 1/3)$.
 $$\text{Corr}(X_t, B_t) = \frac{\text{Cov}(X_t, B_t)}{\sqrt{\text{Var($X_t$)}}\sqrt{\text{Var($B_t$)}}} = \frac{\text{Cov}(X_t, B_t)}{t}$$
 To find the covariance of the two processes
 \begin{align*}
-    \text{Cov}(X_t ,B_t) &= \frac{1}{\sqrt{2}}(\text{Cov}(W_t, B_t) + \text{Cov}(B_t, B_t))  \\
-    &= \sqrt{2}t
+    \text{Cov}(X_t ,B_t) &= \frac{1}{\sqrt{2}}(E[B_t^2] + E[B_tW_t]) \\
+    &= \frac{t}{\sqrt{2}}
 \end{align*}
-From here, we conclude Corr$(X_t, B_t) = \sqrt{2}$
+From here, we conclude Corr$(X_t, B_t) = 1/\sqrt{2}$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Prove that $B_t$ is nowhere differentiable a.s. [UniMelb]  
@@ -162,6 +205,23 @@ Thus with probability 1, we conclude that $B_t$ is nowhere differentiable. $\squ
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} (Fractal Scaling Property of Brownian Motion) Show that for any fixed $a>0$  the process $X_t = aB_{t/a^2}$ is itself a Brownian Motion.  
 \end{tcolorbox}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} State and Prove the Markov Property for Brownian Motion.
+\end{tcolorbox}
+\textbf{Solution.} The a process satisfies the Markov Property (is Markovian) if the future trajectory of the process is independent of its past. That is, the future evolution of the process depends only on its current position, and no further history. Mathematically, 
+$$P(X_{t+s} \leq y| \mathcal{F}_t) = P(X_{t+s} \leq y| X_t=x)$$
+To see that Brownian Motion satisfies the Markov Property let $s <t$ and consider 
+\begin{align*}
+    P(B_t \leq y| \mathcal{F}_s) &= P(B_s + (B_t-B_s) \leq y|\mathcal{F}_s) \\
+    &= P(B_t \leq y| B_s =x) \\
+\end{align*}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Exit Time and Probability of Brownian Motion) 
+\end{tcolorbox}
+
 
 
 \newpage
