@@ -6,6 +6,16 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+
 \begin{document}
 
 % Cover Page
@@ -222,6 +232,31 @@ To see that Brownian Motion satisfies the Markov Property let $s <t$ and conside
 \textbf{Question:} (Exit Time and Probability of Brownian Motion) 
 \end{tcolorbox}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $s < t$, find the distribution of $B_s | B_t = b$.
+\end{tcolorbox}
+\textbf{Solution.} The \textit{trick} to this problem is to recognize that $(B_s, B_t)$ is multivariate normal then apply the \href{https://online.stat.psu.edu/stat505/lesson/6/6.1}{formulae for conditional distributions of multivariate Gaussians}. That is: 
+\begin{align*}
+    & E[B_s | B_t=b] = \frac{s}{t}b \\
+    &\text{Var}(B_s | B_t=b) = s-\frac{s^2}{t} = \frac{s(t-s)}{t}
+\end{align*}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that for any $0\leq a < b<\infty$ Brownian Motion is non-monotone on the interval $[a,b]$ with probability 1.  
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} By considering $M_t := \max_{0\leq s \leq t} B_s$ and $T_a$ be the first time that $B_t$ hits $a > 0$. Prove that $P(\tau_x\leq t) = P(|B_t|\geq x)$  
+\end{tcolorbox}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that $|B_t| \stackrel{d}{=} \max_{0\leq s\leq t} B_s$.
+\end{tcolorbox}
+
+
+\newpage
+\section{Brownian Motion Calculus}
 
 
 \newpage
