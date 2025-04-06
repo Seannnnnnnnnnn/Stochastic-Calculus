@@ -1,0 +1,121 @@
+\documentclass{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{natbib} 
+\usepackage{tcolorbox} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+
+\begin{document}
+
+% Cover Page
+\begin{titlepage}
+    \centering
+    {\Huge \textbf{Stochastic Calculus}}\\[1.5cm] % Title
+    \textbf{Author:} Sean Conlon\\[1cm] % Replace n'Your Name' with your actual name
+    \textbf{Date:} \today\\[3cm] % Automatically inserts today's date
+    
+    \section*{Assignment 1.}
+    This document contains my solution for assignment 1 of University of Melbourne's \texttt{MAST90059 Stochastic Calculus} subject. I hereby declare all work contained within is my own, unless cited. 
+
+    % Table of Contents
+    \tableofcontents
+    
+\end{titlepage}
+
+% Example sections (these will appear in the table of contents)
+\newpage
+\section{Question 1}
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+Let $B_t$ be a standard Brownian Motion. For any fixed $c > 0$ and $n\geq 3$ we define the following sets
+\begin{align*}
+    & A_n := \{\omega : \exists s\in[0,1] :|B_t(\omega) - B_s(\omega)|\leq c|t-s| \text{ if } |t-s|\leq 3/n\} \\
+    & L_{k,n} := \max_{j=0,1,2} \{|B_{(k+j)/n} - B_{(k+j-1)/n}|\}, \quad 1\leq k\leq n-2 \\
+    & D_n  := \{\text{at least one of the $L_{k,n}$'s is }\leq 5c/n\}
+\end{align*}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{a)} Show that $A_n\subseteq D_n$
+\end{tcolorbox}
+\textbf{Proof}. Assume $\omega\in A_n$. Then by definition, there exists some $s\in[0,1]$ such that for all $t$ with $|t-s|\leq 3/n$ we have 
+$$|B_{t}(\omega) - B_s(\omega)|\leq c|t-s|$$
+To locate the interval containing $s$, we partition $[0,1]$ into $n$ sub-intervals of length $\frac{1}{n}$. The point $s$ must lie in one of the sub-intervals, say 
+$$s\in\left[\frac{m-1}{n}, \frac{m}{n}\right)\quad \text{ for some } m\in\{1,2,\dots,n\}$$ 
+To ensure the neighborhood $|t-s|\leq 3/n$ stays within $[0,1]$ we assume $s\in[2/n, 1 -2/n]$. We'll handle the boundary cases separately at the end. \\
+\\
+We now consider the three consecutive intervals centered at $m$: 
+$$\left[\frac{m-2}{n}, \frac{m-1}{n}\right], \quad \left[\frac{m-1}{n}, \frac{m}{n}\right], \quad \left[\frac{m}{n}, \frac{m+1}{n}\right]$$
+For any $t$ in these intervals, $|t-s|\leq 3/n$ since $s\in[\frac{m-1}{n}, \frac{m}{n})$. Now using this fact we have: 
+\begin{enumerate}
+    \item For $t=\frac{m-1}{n}$: $$|B_{\frac{m-1}{n}}(\omega) - B_s(\omega)|\leq c\left(s - \frac{m-1}{n}\right) \leq \frac{c}{n}$$
+
+    \item for $t = \frac{m}{n}$: 
+    $$|B_{\frac{m}{n}}(\omega) - B_s(\omega)|\leq c\left(s - \frac{m}{n}\right) \leq \frac{c}{n}$$
+
+    \item for $t = \frac{m+1}{n}$:
+    $$|B_{\frac{m+1}{n}}(\omega) - B_s(\omega)|\leq c\left(s - \frac{m+1}{n}\right) \leq \frac{2c}{n}$$
+\end{enumerate}
+We can now bound the increments: 
+\begin{align*}
+     & |B_{\frac{m-1}{n}} - B_{\frac{m-2}{n}}| \leq |B_{\frac{m-1}{n}} 
+ + s| + | s - B_{\frac{m-2}{n}}| \leq \frac{2c}{n} \\
+  & |B_{\frac{m+1}{n}} - B_{\frac{m}{n}}| \leq |B_{\frac{m+1}{n}} - s | + |s - B_{\frac{m}{n}}| \leq \frac{2c}{n} + \frac{c}{n} = \frac{3c}{n}
+\end{align*}
+Thus, for $k=m-1$: 
+$$L_{m-1, n} = \max \left\{ |B_{\frac{m-1}{n}} - B_{\frac{m-2}{n}}|, |B_{\frac{m}{n}} - B_{\frac{m-1}{n}}|, |B_{\frac{m+1}{n}} - B_{\frac{m}{n}}|\right\}\leq \frac{5c}{n}$$
+In the event that $s\in[0, \frac{2}{n})$ or $s\in(1 - \frac{2}{n}, 1]$ we adjust to $k=1$ or $k=n-2$ respectively and repeat the above argument. We conclude that in either case, for every $\omega\in A_n$ there exists a $k$ such that $L_{k,n}(\omega)\leq \frac{5c}{n}$ and thus $A_n\subseteq D_n$. $\square$
+
+
+
+\newpage
+\section{Question 2}
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+Let $B_t$ be a standard Brownian Motion and $N_t$ be a Poisson process with rate $\frac{\sqrt{e}}{2(\sqrt{e}- 1)}$ where $B_t$ and $N_t$ are independent. Define 
+$$X_t := \sqrt{t} e^{-\frac{1}{2}N_{\ln t}} B_{e^{N_{\ln t}}} \hspace{5mm} t\geq 1$$
+\end{tcolorbox}
+
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{a)} Show that $X_t \sim N(0,t)$ for $t\geq 1$
+\end{tcolorbox}
+\textbf{Proof.} We first note for $t\geq1$ the process $N_{\ln t}$ is well defined. Since the Brownian Motion in $X_t$ is indexed at $e^{N_{\ln t}}$ we first consider the conditional distribution $X_t | N_{\ln t} =n$. The process is now comprised of
+\begin{itemize}
+    \item The Brownian Motion term which now has distribution $B_{e^{N_{\ln t}}} = B_{e^n} \sim N(0, e^n)$. 
+    \item A now deterministic decay term $e^{-\frac{1}{2}N_{\ln t}} = e^{-\frac{n}{2} }$
+    \item A deterministic scaling term $\sqrt{t}$.
+\end{itemize}
+Combine these three and we now see that 
+\begin{align*}
+    X_t | \{N_{\ln t} = n\} &= \sqrt{t}e^{-\frac{n}{2}}B_{e^n} \\
+    &\stackrel{d}{=} \sqrt{t} N(0,1) \\
+    &\stackrel{d}{=} N(0,t)
+\end{align*}
+So we conclude $X_{t} | N_{\ln t}=n\sim N(0, t).$ Finally, we note that as this holds for arbitrary $n$ we must have the unconditional distribution as $X_t \sim N(0, t)$ also. $\square$
+
+
+\newpage
+\section{Question 3}
+
+
+\newpage
+\bibliographystyle{plain} 
+\bibliography{references}  % Assumes a references.bib file
+
+\end{document}
