@@ -263,6 +263,23 @@ $$\lim_{t\to\infty}\frac{B_t}{t} = 0 \text{ a.s.}$$
 \newpage
 \section{Brownian Motion Calculus}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t=-1$ on $0\leq t\leq1$, $X_t=1$ on $1 < t\leq2$ and $X_t=2$ on $2 < t\leq3$. Find the distribution of $\int_0^3X_sdB_s$. \cite{Fima}
+\end{tcolorbox}
+\textbf{Solution.} This is an Itô integral for a simple, nonstochastic process. By Definition
+\begin{align*}
+    \int_0^3 X_sdB_s &:= -(B_1-B_0) + (B_2-B_1)+2(B_3-B_2) \\ 
+    &= 2B_3 -B_2-2B_1 \\
+\end{align*}
+We now the distribution will be gaussian with 0 mean. To find the variance we recall Cov$(B_t, B_s) = \min(t,s)$ and so
+\begin{align*}
+    \text{Var}(2B_3 -B_2-2B_1) &= \text{Var}(2B_3) + \text{Var}(B_2) + \text{Var}(2B_1) - 2\text{Cov}(B_3, B_2)-4\text{Cov}(B_3, B_2) +2\text{Cov}(B_2,B_1) \\
+    &= 12 + 2 + 4-4-8+2 \\
+    &= 6
+\end{align*}
+Hence we conclude $\int_0^3X_sdB_s\sim N(0,6).$
+\newpage
+\section{Stochastic Differential Equations}
 
 \newpage
 \bibliographystyle{plain} 
