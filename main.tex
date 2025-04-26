@@ -103,6 +103,18 @@ Prove that $\mathcal{F}_T$ is a $\sigma$-algebra and $T$ is $\mathcal{F}_T$-meas
     \item (Closure Under Compliments). Suppose $A\in\mathcal{F}_T$. Then $A^c\cap\{T\leq t\} = \{T\leq t\}\backslash A $
 \end{enumerate}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} $X\sim N(\mu,\sigma^2)$ find the distribution function of $Y = |X|.$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that the characteristic function of a $N(\mu, \sigma^2)$ random variable is 
+$$\varphi_X(t) = \exp(i\mu t - \sigma^2t^2/2)$$
+\end{tcolorbox}
+\textbf{Proof.}
+
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} (Limits of Gaussian Random Variables are Gaussian) Let $\{Y_n:n\geq 0\}$ be a sequence of Gaussian Random variables such that $Y_n\stackrel{d}{\to} Y$. Show that $Y$ is either degenerate or Gaussian. 
@@ -265,9 +277,30 @@ $$\lim_{t\to\infty}\frac{B_t}{t} = 0 \text{ a.s.}$$
 \end{tcolorbox}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Prove the law of the iterated logarithm for Brownian Motion:
+\end{tcolorbox}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Argue that the process $X_t := \int_0^t B_sds$ exists. Show that it is a Gaussian Process, state its mean, variance and Covariance Function.
 \end{tcolorbox}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that the zeroes of Brownian Motion for an uncountable set which has zero measure $\mathbb{P}$ - almost surely.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that for any $x\geq 0$ 
+$$\mathbb{P}(\max_{s\in[0,t]} B_t\geq x) = 2\left(1- \Phi\left(\frac{x}{\sqrt{t}}\right)\right).$$
+\end{tcolorbox}
+\textbf{Proof.} Define $\tau_x := \inf_{t\geq0}\{B_t=x\}$ and follow the usual steps for deriving the maximum of Brownian Motion: 
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that for any $x<0$ 
+$$\mathbb{P}(\min_{s\in[0,t]} B_t\leq x) = 2\mathbb{P}(B_t\leq x).$$
+\end{tcolorbox}
+\textbf{Proof.} 
 
 \newpage
 \section{Brownian Motion Calculus}
@@ -295,10 +328,69 @@ Hence we conclude $\int_0^3X_sdB_s\sim N(0,6).$
 \textbf{Solution.}
 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find the values of $\alpha$ for which the process $Y_t = \int_0^t(t-s)^{-\alpha}dB_s$ is defined.
+\end{tcolorbox}
+\textbf{Solution}. Recall that $\int_0^t X_sdB_s$ is well-defined so long as $\int_0^t E[X_s^2]ds<\infty$. Applying this to $Y_t$ we require $\int_0^t(t-s)^{-2\alpha}ds <\infty$. Make the substitution $u = (t-s)$ then\footnote{Notice that $s$ ranges from $[0,t]$ in the original integrand, so when we make the $u$ substitution under the original end-points $u = t-s$ now varies from $t$ down to $0$. We then switch the order of these bounds which multiples through by $-1$.}
+\begin{align*}
+    \int_0^t(t-s)^{-2\alpha}ds &= \int_t^0 u^{-2\alpha}(-du) \\
+    &= \int_0^tu^{-2\alpha}du
+\end{align*}
+From here, one clearly sees this integral is finite provided $\alpha < 1/2.$ $\square$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find the Stochastic Differential $d(Y_t / Z_t)$ where $Y_t = tB_t$ and $Z_t=e^{B_t}$ using Itô's formula. \cite{Fima}
+\end{tcolorbox}
+\textbf{Solution.} For exercises like this, the approach is: 
+\begin{enumerate}
+    \item Identify a suitable function $f$ to apply Itô's formula to. 
+    \item Compute the partial derivatives of $f$. 
+    \item Compute the differentials $dZ_t$ and $dY_t$. 
+    \item Substitute everything in and cross cancel. 
+\end{enumerate}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Derive the Stochastic Calculus equivalent of the Product Rule by applying Itô's lemma. 
+\end{tcolorbox}
+\textbf{Solution.} Consider the function $f(x,y) = xy$. One verifies it has the partial derivatives $f_x(x,y)=y$, $f_y(x,y)=x$, $f_{x,y}(x,y)=1$ and vanishing second-order derivatives. Applying Ito's formula for multi-variate functions one finds
+$$dX_tY_t = Y_tdX_t + X_tdY_t + \sigma_X(t)\sigma_Y(t)dt.$$
+
 
 \newpage
 \section{Stochastic Differential Equations}
 
+
+\newpage
+\section{Applications to Finance}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $S_1$ and $S_2$ be two non-dividend paying stocks that evolving according to geometric Brownian motion. Find a stochastic differential for $S_1 + S_2$ when $S_1$ and $S_2$ are independent, and when they share correlation equivalent $\rho$.  \cite{Hull}
+\end{tcolorbox}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Suppose $S_t$ follows geometric brownian motion and let $G$ be a function of $S_t$ and $t$. Show that when the expected return of $S_t$ increases by $\lambda \sigma _S$ the expected return of $G$ grows by $\lambda \sigma _G$. \cite{Hull}
+\end{tcolorbox}
+\textbf{Proof.} To begin, note that $dS_t = \mu S_t dt + \sigma_S S_tdB_t$. We now apply Itô's lemma so that 
+\begin{align*}
+   dG &= \frac{\partial G}{\partial S_t}dS_t + \frac{\partial G}{\partial t}dt + \frac{\partial^2 G}{\partial S_t^2}\sigma^2_s S_t^2dt  \\
+   &= \frac{\partial G}{\partial S_t}(\mu S_t dt + \sigma_sS_tdB_t) + \frac{\partial G}{\partial t}dt + \frac{\partial^2 G}{\partial S_t^2}\sigma^2_s S_t^2dt \\
+   &= \left(\frac{\partial G}{\partial S_t}\mu S_t + \frac{\partial G}{\partial t} + \frac{\partial^2 G}{\partial S_t^2}\sigma_S^2S_t^2\right)dt + \frac{\partial G}{\partial S_t}\sigma_S S_t dB_t
+\end{align*}
+From here one sees that 
+\begin{align*}
+     & \sigma_G = \frac{\partial G}{\partial S_t}\sigma_S S_t \\
+    & \mu_G  = \frac{\partial G}{\partial S_t}\mu S_t + \frac{\partial G}{\partial t} + \frac{\partial^2 G}{\partial S_t^2}\sigma_S^2S_t^2
+\end{align*}
+The \textit{expected return of $S_t$} is controlled entirely through $\mu$. So to increase the expected rate of return by $\lambda\sigma_S$ we update the mean to $\mu + \lambda\sigma_S$. Thus, $\mu_G$ is increased by
+$$\frac{\partial G}{\partial S_t}\lambda\sigma_S S_t = \lambda\sigma_G$$
+as claimed. $\square$
+ 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Derive the price evolution of a Zero Coupon Bond paying \$1 at time $T$, given the yield $X_t$ on the bond evolves according to $dX_t = \alpha(X_t-X_0)dX_t + \sigma X_tdB_t$. \cite{Hull}
+\end{tcolorbox}
+\textbf{Proof}. The price of the bond at time $t\leq T$ is $P_t = e^{-X_t(T-t)}$. The trick is to now apply Itô's lemma to $f(s) = e^{-s(T-t)}$.
 \newpage
 \bibliographystyle{plain} 
 \bibliography{references}  % Assumes a references.bib file
