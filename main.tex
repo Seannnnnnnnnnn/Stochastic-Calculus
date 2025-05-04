@@ -266,23 +266,41 @@ To see that Brownian Motion satisfies the Markov Property let $s <t$ and conside
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} By considering $M_t := \max_{0\leq s \leq t} B_s$ and $T_a$ be the first time that $B_t$ hits $a > 0$. Prove that $P(\tau_x\leq t) = P(|B_t|\geq x)$  
 \end{tcolorbox}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that $|B_t| \stackrel{d}{=} \max_{0\leq s\leq t} B_s$.
 \end{tcolorbox}
+\textbf{Proof.} For notional simplicity let $X_t := \max_{s\in[0,t]} B_s$ and define the stopping time for the first time $B_t$ hits the level $\alpha$. That is, $\tau_\alpha := \inf_{t>0}\{B_t = \alpha\}$. One can see that $\{X_t\geq\alpha\} = \{\tau_\alpha \leq t\}$. We can now calculate
+\begin{align*}
+    \mathbb{P}(\tau_\alpha \leq t) &= \mathbb{P}(\tau_\alpha\leq t, B_t \geq \alpha) + \mathbb{P}(\tau_\alpha\leq t, B_t < \alpha) \\
+    &= 2\mathbb{P}(\tau_\alpha\leq t, B_t \geq \alpha) \\
+    &= 2\mathbb{P}(X_t\geq \alpha, B_t\geq \alpha) \hspace{10mm}\text{{Substituting $\{X_t\geq\alpha\} = \{\tau_\alpha \leq t\}$}} \\
+    &= 2\mathbb{P}(B_t\geq \alpha) \\
+    &= \mathbb{P}(B_t\geq \alpha) + \mathbb{P}(B_t\leq -\alpha) \\
+    &=\mathbb{P}(|B_t|\geq\alpha)
+\end{align*}
+Thus, we can see that $\mathbb{P}(X_t\geq\alpha) = \mathbb{P}(|B_t|\geq\alpha)$ to complete the proof. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Prove the law of large numbers for Brownian Motion
 $$\lim_{t\to\infty}\frac{B_t}{t} = 0 \text{ a.s.}$$
 \end{tcolorbox}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Prove the law of the iterated logarithm for Brownian Motion:
+\begin{align*}
+    & \limsup_{t\to\infty}\frac{B_t}{\sqrt{t\ln\ln t}}=1\quad \text{a.s} \\
+    & \liminf_{t\to\infty}\frac{B_t}{\sqrt{t\ln\ln t}}=-1\quad \text{a.s}
+\end{align*}
 \end{tcolorbox}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Argue that the process $X_t := \int_0^t B_sds$ exists. Show that it is a Gaussian Process, state its mean, variance and Covariance Function.
 \end{tcolorbox}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that the zeroes of Brownian Motion for an uncountable set which has zero measure $\mathbb{P}$ - almost surely.
@@ -295,6 +313,17 @@ $$\lim_{t\to\infty}\frac{B_t}{t} = 0 \text{ a.s.}$$
 $$\mathbb{P}(\max_{s\in[0,t]} B_t\geq x) = 2\left(1- \Phi\left(\frac{x}{\sqrt{t}}\right)\right).$$
 \end{tcolorbox}
 \textbf{Proof.} Define $\tau_x := \inf_{t\geq0}\{B_t=x\}$ and follow the usual steps for deriving the maximum of Brownian Motion: 
+\begin{align*}
+    \mathbb{P}(\tau_x \leq t) &= \mathbb{P}(\tau_\alpha\leq t, B_t \geq x) + \mathbb{P}(\tau_x\leq t, B_t < x) \\
+    &= 2\mathbb{P}(\tau_x\leq t, B_t \geq x) \\
+    &= 2\mathbb{P}(X_t\geq x, B_t\geq x) \hspace{10mm}\text{{Substituting $\{X_t\geq\alpha\} = \{\tau_\alpha \leq t\}$}} \\
+    &= 2\mathbb{P}(B_t\geq x) \\
+\end{align*}
+We're now pretty much done. All that remains is to write this in the desired form
+\begin{align*}
+    2\mathbb{P}(B_t\geq x) = 2(1 - \mathbb{P}(B_t <x))  &= 2(1 - \mathbb{P}(B_t/\sqrt{t} <x/\sqrt{t})) \\
+    &= 2\left(1- \Phi\left(\frac{x}{\sqrt{t}}\right)\right) \quad\square
+\end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that for any $x<0$ 
@@ -356,10 +385,129 @@ From here, one clearly sees this integral is finite provided $\alpha < 1/2.$ $\s
 \textbf{Solution.} Consider the function $f(x,y) = xy$. One verifies it has the partial derivatives $f_x(x,y)=y$, $f_y(x,y)=x$, $f_{x,y}(x,y)=1$ and vanishing second-order derivatives. Applying Ito's formula for multi-variate functions one finds
 $$dX_tY_t = Y_tdX_t + X_tdY_t + \sigma_X(t)\sigma_Y(t)dt.$$
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Suppose $X_t = (1-t)\int_0^t\frac{dB_s}{1-s}$, where $0\leq t<1$. Find $dX_t$
+\end{tcolorbox}
+\textbf{Solution.} This can appears a little intimidating, but the trick is to just realise it is a product of two component, and we can apply Itô's lemma to the function $f(x,y) = xy$.
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find the quadratic variation of $X_t = tB_t$
+\end{tcolorbox}
+\textbf{Solution.} When asked to find the quadratic varition of a process, we should first ask if the process if an Itô process? If so, it can be written as $dX_t = \mu_t dt + \sigma_t dB_t$ and we immediately know 
+$$[X, X]_t = \int_0^t\sigma_s^2ds.$$
+For our process in question, we determine if it is an Itô process by applying Itô's lemma to the function $f(x,y) = xy$ with arguments $x=t, y=B_t$. 
+\begin{align*}
+    dX_t = df(t,B_t) &= \frac{\partial f}{\partial B_t}dB_t + \frac{\partial f}{\partial t}dt + \frac{\partial^2 f}{\partial B_t^2}dt \\
+    &=tdB_t + B_tdt
+\end{align*}
+Thus, $X_t$ is an Itô process with $\sigma_t = t$. It follows that the quadratic variation is therefore
+\begin{align*}
+    [X,X]_t = \int_0^t s^2ds = \frac{t^3}{3} \quad \square
+\end{align*}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $W_t$ be a standard Brownian Motion. Suppose $X_t$ is some process that satisfies $d(\frac{1}{X_t}) = \frac{1}{X_t}(2dt-dW_t)$. It is known that $dX_t = X_t(adt + bdW_t)$. Find $a$ and $b$.
+\end{tcolorbox}
+\textbf{Solution.} Applying Ito's Chain Rule to $f(t) = 1/t$ we have 
+\begin{align*}
+    d\left(\frac{1}{X_t}\right) = df(X_t) &=  f^\prime(X_t)dX_t + \frac{1}{2}f^{\prime\prime}(X_t)b^2X_t^2dt \\
+    &= -\frac{1}{X_t^2}(aX_tdt + bX_tdW_t) + \frac{b^2}{X_t}dt \\
+&= \frac{1}{X_t}(b^2-a)dt-bdW_t
+\end{align*}
+From here, it is clear that $2 = b^2-a$ and $-1 = b$. Thus, $a=b=-1$. $\square$
+
 
 \newpage
 \section{Stochastic Differential Equations}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $\Phi$ be the standard normal cumulative distribution functoin. Show that the process $X_t := \Phi(\frac{B_t}{\sqrt{T-t}})$ for $0\leq t<T$ is a martingale for a fixed $T$.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that $X_t = X_0 e^{(\mu-\sigma^2/2)t + \sigma B_t}$ satisfies $dX_t =\mu X_t dt + \sigma X_t dB_t$.
+\end{tcolorbox}
+\textbf{proof.} The "classic" way to show this is to start with the stochastic differential and apply Itô's lemma with $f(t) = \ln t$
+\begin{align*}
+    d\ln X_t  &= \frac{1}{X_t}(\mu X_t dt + \sigma X_t dB_t) - \frac{\sigma^2}{2}dt \\
+              &= \left(\mu - \frac{\sigma^2}{2}\right)dt + \sigma dB_t
+\end{align*}
+Which implies by Itô's formula
+\begin{align*}
+    \ln X_t &= \ln X_0 + \left(\mu - \frac{\sigma^2}{2}\right)t + \sigma B_t \\
+    &= X_0 \exp^{\left(\mu - \frac{\sigma^2}{2}\right)t + \sigma B_t}.
+\end{align*}
+Which completes the proof. $\square$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that the solution to the \textit{Ornstein-Uhlenbeck} Process $dX_t = -\alpha X_tdt + \sigma dB_t$ is given by 
+$$X_t = e^{-\alpha t}\left(X_0 + \int_0^t\sigma e^{\alpha s}dB_s\right)$$
+\end{tcolorbox}
+\textbf{proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that the unique solution to $dU_t = U_tdX_t$ is given by 
+$$\mathcal{E}(X_t) := U_t = e^{X_t - X_0 - \frac{1}{2}[X,X]_t}.$$
+\end{tcolorbox}
+\textbf{proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Solve the SDE $dX_t = X_tB_tdt + X_tB_tdB_t, \quad X_0=1$.
+\end{tcolorbox}
+\textbf{Solution.} Start by writing
+\begin{align*}
+    dX_t &= X_tB_tdt + X_tB_tdB_t \\
+    &= X_tdY_t
+\end{align*}
+Where $dY_t := B_tdt + B_tdB_t$. This is now in the form of a stochastic exponential which we know has unique solution
+$$X_t = X_0\exp\left(Y_t - Y_0 + \frac{1}{2}[Y,Y]_t\right).$$
+Since $Y_t$ is an Itô Process with $\sigma_s = B_s$
+$$[Y,Y]_t = \int_0^t B_s^2 ds$$
+Thus, the solution to the SDE is 
+\begin{align*}
+    X_t &= \exp\left( \int_0^tB_sds + \int_0^t B_sdB_s - \frac{1}{2}\int_0^t B_s^2ds\right). \\
+    &= \exp\left( \int_0^tB_s - \frac{B_s^2}{2}ds + \int_0^t B_sdB_s \right). \quad \square
+\end{align*}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Solve the SDE $dX_t = X_t dt + B_tdB_t, \quad X_0=1$.
+\end{tcolorbox}
+\textbf{Solution.} 
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find $d\mathcal{E}(B_t)^2$ where $\mathcal{E}$ denotes the Stochastic Exponential.
+\end{tcolorbox}
+\textbf{Solution.} Recall that $\mathcal{E}(X_t) = \exp(X_t - X_0 + \frac{1}{2}[X,X]_t)$. So $\mathcal{E}(B_t) = \exp(B_t - t/2).$ We 
 
 \newpage
 \section{Applications to Finance}
@@ -367,7 +515,7 @@ $$dX_tY_t = Y_tdX_t + X_tdY_t + \sigma_X(t)\sigma_Y(t)dt.$$
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $S_1$ and $S_2$ be two non-dividend paying stocks that evolving according to geometric Brownian motion. Find a stochastic differential for $S_1 + S_2$ when $S_1$ and $S_2$ are independent, and when they share correlation equivalent $\rho$.  \cite{Hull}
 \end{tcolorbox}
-
+\textbf{Solution.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Suppose $S_t$ follows geometric brownian motion and let $G$ be a function of $S_t$ and $t$. Show that when the expected return of $S_t$ increases by $\lambda \sigma _S$ the expected return of $G$ grows by $\lambda \sigma _G$. \cite{Hull}
