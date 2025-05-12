@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{natbib} 
+\usepackage{tcolorbox} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+
+\begin{document}
+
+% Cover Page
+\begin{titlepage}
+    \centering
+    {\Huge \textbf{Stochastic Calculus}}\\[1.5cm] % Title
+    \textbf{Author:} Sean Conlon\\[1cm] % Replace n'Your Name' with 
+    \textbf{Student Id:} 1298865\\[1cm]
+    \textbf{Date:} \today\\[3cm] % Automatically inserts today's date
+    
+    \section*{Assignment 2.}
+    This document contains my solution for assignment 2 of University of Melbourne's \texttt{MAST90059 Stochastic Calculus} subject.
+
+    % Table of Contents
+    \tableofcontents
+    
+\end{titlepage}
+
+% Example sections (these will appear in the table of contents)
+\newpage
+\section{Question 1}
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+Let $f_t$ be  anon-random measurable function on $[0,T]$ satisfying $\int_0^Tf_t^2dt<\infty.$ Show the the following process is a martingale: 
+$$Y_t = \exp\left(\int_0^t f_sdB_s - \frac{1}{2}\int_0^t f_s^2ds\right)$$
+\end{tcolorbox}
+\textbf{Proof.} Define $dX_t := f_tdB_t - \frac{1}{2}f_t^2ds$. Applying Ito's lemma to $Y_t = e^{X_t}$ we have
+\begin{align*}
+    dY_t = de^{X_t} &= e^{X_t}dX_t + \frac{1}{2}e^{X_t}dX_t^2 \\
+    &= e^{X_t} f_tdB_t - \frac{1}{2}f_t^2e^{X_t}dt + \frac{1}{2}f_t^2e^{X_t}dt \\
+    &= e^{X_t}f_t dB_t
+\end{align*}
+To complete the proof, we note that $dY_t$ does not contain a drift term, and is thus a martingale. $\square$
+
+
+\newpage
+\section{Question 2}
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ Find the stochastic exponential $U_t$ of $B_t^4+1$ with $U_0=1$. And the Stochastic logarithm $X_t$ of $B_t^4+1$ with $X_0=0$.
+\end{tcolorbox}
+\textbf{Solution}. We know from lecture notes that the stochastic logarithm is given by
+$$U_t = \mathcal{E}(Y_t) = \exp\left(Y_t - Y_0 - [Y,Y]_t\right)\quad\quad (1)$$
+where $Y_t= B_t^4+1$. From here, we can see that we need to find the quadratic variation of $Y_t$. To do so, we first verify it is in an Itô process. Let $f(t):=t^4+1$ then according to Itô's lemma
+\begin{align*}
+    dY_t = df(B_t) &= f^\prime(B_t)dB_t + \frac{1}{2}f^{\prime\prime}(B_t)dB_t^2 \\
+            &= 4B_t^3dB_t + 6B_t^2dt
+\end{align*}
+So we see that $Y_t$ is and Itô process with drift $\mu_t = 6B_t^2$ and diffusion $\sigma_t=4B_t^3$ and therefore has quadratic variation 
+$$[Y,Y]_t = \int_0^t\sigma_s^2ds = \int_0^t16B_s^6 ds$$
+Substituting into (1) we see
+$$U_t  = \exp\left(B_t^4 - \int_0^t8B_s^6ds\right).$$
+We now consider the Stochastic Logarithm of $Y_t$. We recall for a positive continuous semi-martingale 
+$$X_t = \mathcal{L}(Y_t) = \int_0^t\frac{1}{Y_s}dY_s - \frac{1}{2}\int_0^t\frac{1}{Y_s^2}d[Y,Y]_s \quad\quad(2)$$
+$Y_t$ is clearly positive and continuous. To see that it is a semi-martingale, recall that applying a $C^2$ function to a continuous semiartingale is itself a continuous semimartingale. Since $B_t$ is a martingale (and therefore semimartingale) and $f(t) := t^4+1 \in C^2$, the thereom holds and we can substitute into  $(2)$.
+From our previous work, we know that $d[Y,Y]_t = 16B_t^6dt$, giving
+\begin{align*}
+    \mathcal{L}(Y_t) &= \int_0^t\frac{1}{Y_s}dY_s - \frac{1}{2}\int_0^t\frac{1}{Y_s^2}d[Y,Y]_s \\
+    &= \int_0^t\frac{1}{B_s^4+1}(4B_s^3dB_s + 6B_s^2ds)-\frac{1}{2}\int_0^t \frac{1}{(B_s^4+1)^2}16B_s^2ds \\
+    &= \int_0^t\frac{4B_s^3}{B_s^4+1}dB_s-\int_0^t\left( \frac{6B_s^2}{B_s^4+1}-\frac{8B_s^2}{(B_s^4+1)^2}\right)ds
+\end{align*}
+which completes our solution. $\square$
+
+\newpage
+\section{Question 3}
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ Let $X_t := \sigma\int_0^t e^{-\alpha(t-s)}dB_s$ be an Ornstein Uhlenbeck process where $\alpha$ and $\sigma$ are non-negative constants. 
+\end{tcolorbox}
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ \textbf{a)} Show that $X_t$ is a Gaussian square-integrable process. Is it a martingale? 
+\end{tcolorbox}
+
+
+\newpage
+\section{Question 4}
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+  let $f(x,t)\in C^{2,1}$ satsify
+  $$\frac{\partial f}{\partial t}(x,t) = \psi(f(x,t),t) \quad\quad \frac{\partial f}{\partial x}(x,t) = \sigma(f(x,t),t)$$
+  where $\psi$ is continuous on $\mathbb{R}\times[0,\infty)$ and $\sigma(y,t)\in C^{2,1}(\mathbb{R}\times[0,\infty)).$ 
+\end{tcolorbox}
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ \textbf{a)} Show that $X_t = f(B_t, t)$ solves the Fisk-Stratovonich equation
+ $$dX_t = \left(\psi(X_t,t) + \frac{1}{2}\sigma(X_t,t)\frac{\partial \sigma}{\partial x}(X_t,t)\right)dt + \sigma(X_t,t)dB_t$$
+\end{tcolorbox}
+\textbf{Proof.} This is a straightforward application of Itô's Lemma, and substituting the given expressions for the partial derivatives
+\begin{align*}
+    dX_t &= \frac{\partial}{\partial x}f(B_t, t)dB_t + \frac{\partial}{\partial t}f(B_t, t)dt + \frac{1}{2}\frac{\partial^2}{\partial x^2}f(X_t, t)dt \\
+    &= \left(\psi(X_t,t) + \frac{1}{2}\frac{\partial^2 }{\partial x^2}f(B_t,t)\right)dt + \sigma(X_t,t)dB_t
+\end{align*}
+We're almost done. The final step is to note by the chain rule
+$$\frac{\partial^2 }{\partial x^2} X_t = \frac{\partial}{\partial x}\sigma(X_t,t) = \sigma(X_t,t)\frac{\partial}{\partial x}\sigma(X_t,t)$$
+substitute this back in, and we have the claim. $\square$
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ \textbf{b)} Show that there is a unique solution, strong solution to the Itô equation
+ $$dX_t = \left(\frac{2t}{1+t^2}X_t - a_1(1+t^2)\right)dt + a_2(1+t^2)dB_t$$
+ where $a_1, a_2$ are constants. 
+\end{tcolorbox}
+\textbf{Proof.} Let $\mu(t,x) = \frac{2t}{1+t^2}x - a_1(1+t^2)$ and let $\sigma(t,x) = a_2(1+t^2)$. For each fixed $t$ we see that $\mu(t,x)$ is affine in $x$ and hence, globally Lipschitz in $x$. The function $\sigma(t,x)$ does not depend on $x$ and is therefore globally Lipschitz in $x$. Both functions are also continuous in $t$. 
+By the standard uniqueness and existance theorem for Stochastic Differential Equations (see Theroem X of \cite{Fima}) there exists a strong solution to this SDE. $\square$
+
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ \textbf{c)} Find the strong solution in part $(b)$.
+\end{tcolorbox}
+\textbf{Solution.} This is a linear SDE in the form 
+$$dX_t = p_t X_t dt + q_tdt + rt_tdB_t$$
+with $p_t = \frac{2t}{1+t^2}$, $q_t = -a_1(1+t^2)$ and $r_t = a_2(1+t^2)$. We first find an integrating factor. Let $\mu_t$ solve 
+$$\mu^\prime(t) = -p_t \mu(t), \quad \mu(0)=1$$
+so 
+$$\mu(t) = \exp\left(-\int_0^t\frac{2s}{1+s^2}ds\right)$$
+but
+$$\int_0^t\frac{2s}{1+s^2}ds = \log(1+s^2)$$
+so 
+$$\mu(t) = \exp(-\log(1+s^2)) = \frac{1}{1+t^2}$$
+The general solution is now
+$$X_t = \frac{1}{\mu(t)}\left(X_0 + \int_0^t\mu(s)q_sds + \int_0^t\mu(s)r_sdB_s\right)$$
+Substituting we see that 
+\begin{align*}
+    & \int_0^t \mu(s)q_sds = \int_0^t(1+s^2)^{-1}[-a_1(1+s^2)]ds = -a_1\int_0^tdt = -a_1t \\
+    & \int_0^t\mu(s)r_sds = \int_0^t(1+s^2)^{-1}a_2(1+s^2)ds = a_2\int_0^tdB_s = a_2B_t
+\end{align*}
+Thus, given $X_0=0$ the final, explicit solution is 
+$$X_t = (1+t^2)(a_2B_t - a_1t)$$
+\newpage
+\bibliographystyle{plain} 
+\bibliography{references}  % Assumes a references.bib file
+
+\end{document}
