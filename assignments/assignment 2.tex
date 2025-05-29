@@ -52,7 +52,6 @@ $$Y_t = \exp\left(\int_0^t f_sdB_s - \frac{1}{2}\int_0^t f_s^2ds\right)$$
 To complete the proof, we note that $dY_t$ does not contain a drift term, and is thus a martingale. $\square$
 
 
-\newpage
 \section{Question 2}
 \begin{tcolorbox}
 [colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -91,6 +90,52 @@ which completes our solution. $\square$
 [colframe=black,colback=gray!5,boxrule=0.5pt]
  \textbf{a)} Show that $X_t$ is a Gaussian square-integrable process. Is it a martingale? 
 \end{tcolorbox}
+\textbf{Solution.} First we note that since $X_t$ is a stochastic integral with respect to Brownian Motion with a deterministic integrand, it is a Gaussian Process with mean zero. To show that $X_t$ is square integrable we compute the variance $\mathbb{E}[X_t^2]$. Using the Itô isometry property:
+\begin{align*}
+    \mathbb{E}[X_t^2] &= \sigma^2 \mathbb{E}\left[\left(\int_0^t e^{-\alpha(t-s)}dB_s\right)^2\right] \\
+    &= \sigma^2 \mathbb{E}\left[\int_0^t (e^{-\alpha(t-s)})^2ds\right] \\
+    &= \sigma^2 \int_0^t e^{-2\alpha(t-s)}ds
+\end{align*}
+We now perform a change of variables $u = t-s \implies du = -ds$
+\begin{align*}
+    \sigma^2 \int_0^t e^{-2\alpha(t-s)}ds &= \sigma^2 \int_0^t e^{-2\alpha u}du \\
+    &=\sigma^2 \left[-\frac{1}{2\alpha}e^{-2\alpha u}\right]_{u=0}^{u=t} \\
+    &= \sigma^2\frac{1-e^{2\alpha t}}{2\alpha} < \infty
+\end{align*}
+Hence, $X_t$ is square integrable. \\
+\\
+The second portion of this question asks us to test the martingale property of this process. To do so, we compute $\mathbb{E}[X_t | \mathcal{F}_s]$ for $s\leq t$: 
+\begin{align*}
+    \mathbb{E}[X_t | \mathcal{F}_s] &= \sigma \mathbb{E}\left[\int_0^t e^{-\alpha (t-u)}dB_u \big | \mathcal{F}_s\right] \\
+    &= \sigma\int_0^s e^{-\alpha (t-u)}dB_u   + \sigma \mathbb{E}\left[\int_s^t e^{-\alpha (t-u)}dB_u \big | \mathcal{F}_s\right] \\
+    &= \sigma\int_0^s e^{-\alpha (t-u)}dB_u   + \sigma \mathbb{E}\left[\int_s^t e^{-\alpha (t-u)}dB_u \right]
+\end{align*}
+The second term is zero, since it is an Itô integral. The first term be split up so that 
+\begin{align*}
+    \sigma\int_0^s e^{-\alpha (t-u)}dB_u &= e^{-\alpha (t-s)}\sigma\int_0^s e^{-\alpha (s-u)}dB_u \\
+    &= e^{-\alpha (t-s)}X_s. 
+\end{align*}
+Thus, $\mathbb{E}[X_t | \mathcal{F}_s] = ^{-\alpha (t-s)}X_s \neq X_s$ and we conclude $X_t$ is not a martingale unless $\alpha=0$. $\square$
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ \textbf{b)} Compute the mean and covariance functions of $X_t$ 
+\end{tcolorbox}
+\textbf{Solution.} The mean function is covered in part \textbf{(a)}, since $X_t$ is an Itô integral with deterministic integrand we have $\mathbb{E}[X_t] = 0$. For $s\leq t$ we compute the covariance function as 
+\begin{align*}
+    \text{Cov}(X_t,X_s) = \mathbb{E}[X_t X_s] &= \sigma^2\mathbb{E}\left[\int_0^t e^{-\alpha(t-v)}dB_v\int_0^s e^{-\alpha(t-u)}dB_u\right]
+\end{align*}
+We can split the first integral up into the regions of $[0,s)\cup [s,t]$. We can see that the the integral from $\int_s^t\cdots$ will contribute zero, since they are Itô integrals, and the process increments are independent between these two regions. Thus, we have 
+\begin{align*}
+    \sigma^2\mathbb{E}\left[\int_0^t e^{-\alpha(t-v)}dB_v\int_0^s e^{-\alpha(t-u)}dB_u\right] &= \sigma^2 \int_0^s e^{-\alpha(t-u)}e^{-\alpha(s-u)}du \\
+    &= \sigma^2\int_0^s e^{-\alpha(t+s-2u)}du \\
+    &= \sigma^2e^{-\alpha(t+s)}\int_0^s e^{2\alpha u}du
+\end{align*}
+Routine integration then gives us 
+\begin{align*}
+    \sigma^2e^{-\alpha(t+2)}\int_0^s e^{2\alpha u}du &= \frac{\sigma^2}{2\alpha}\left(e^{-\alpha t + \alpha s } - e^{-\alpha(t+s)}\right)
+\end{align*}
+The last thing to note is that we assumed $s\leq t$, but could have also just have assumed $t\leq s$. In this case, the derivation would follow just the same, but the first exponential term would become $e^{-\alpha s + \alpha t}$. We can combine both cases and write 
+$$\text{Cov}(X_t,X_s) = \frac{\sigma^2}{2\alpha}\left(e^{-\alpha |t-s| } - e^{-\alpha(t+s)}\right).$$
 
 
 \newpage
@@ -122,7 +167,7 @@ substitute this back in, and we have the claim. $\square$
  where $a_1, a_2$ are constants. 
 \end{tcolorbox}
 \textbf{Proof.} Let $\mu(t,x) = \frac{2t}{1+t^2}x - a_1(1+t^2)$ and let $\sigma(t,x) = a_2(1+t^2)$. For each fixed $t$ we see that $\mu(t,x)$ is affine in $x$ and hence, globally Lipschitz in $x$. The function $\sigma(t,x)$ does not depend on $x$ and is therefore globally Lipschitz in $x$. Both functions are also continuous in $t$. 
-By the standard uniqueness and existance theorem for Stochastic Differential Equations (see Theroem X of \cite{Fima}) there exists a strong solution to this SDE. $\square$
+By the standard uniqueness and existence theorem for Stochastic Differential Equations (see \cite{Fima}) there exists a strong solution to this SDE. $\square$
 
 
 \begin{tcolorbox}
@@ -148,6 +193,86 @@ Substituting we see that
 \end{align*}
 Thus, given $X_0=0$ the final, explicit solution is 
 $$X_t = (1+t^2)(a_2B_t - a_1t)$$
+
+\newpage
+\section{Question 5}
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+ Let $X_t := \sqrt{3}\int_0^tsdB_s$ be a diffusion process
+\end{tcolorbox}
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+    \textbf{a)} Find the transition probability density $p(y,t,x,s):=\frac{d}{dy}\mathbb{P}(X_t\leq y | X_s=x)$ for the process $X_t$
+\end{tcolorbox}
+\textbf{Solution.}
+The process $X_t$ is a an Itô integral with a deterministic integrand, and so it is a zero-mean Gaussian process. It has covariance function 
+\begin{align*}
+    \text{Cov}(X_t,X_u) = 3\int_0^{\min(t,u)}s^2ds = \min(t,u)^3
+\end{align*}
+Thus the mean is 0, and covariance function is $\mathbb{E}[X_tX_s] = \min(s,t)^3$. Next, we determine the conditional distribution. Since $X_t$ is a Gaussian process, we know $(X_s, X_t)$ is a bivariate normal given by 
+\[
+\begin{bmatrix}
+X_s \\
+X_t
+\end{bmatrix}
+\sim \mathcal{N}\left(
+\begin{bmatrix}
+0 \\
+0
+\end{bmatrix},
+\begin{bmatrix}
+s^3 & s^3 \\
+s^3 & t^3
+\end{bmatrix}
+\right)
+\]
+
+And using the formal for conditional distributions for bivariate normals, we have 
+$$\mathbb{E}[X_t|X_s=x] = x$$
+and variance 
+$$\text{Var}(X_t | X_s=x) = t^3-s^3$$
+So $X_t|X_s=x\sim N(x,t^3-s^3)$ and therefore the transition density is 
+$$p(y,t,x,s) = \frac{1}{\sqrt{2\pi(t^3-s^3)}}\exp\left(-\frac{(y-x)^2}{2(t^3-s^3)}\right)$$
+defined for $0\leq s < t<\infty$. $\square$
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+    \textbf{b)} Write down the Kolmogorov forward and backward equations for the process $X_t$
+\end{tcolorbox}
+\textbf{Solution.} From the definition of $X_t$ we have $dX_t = \sqrt{3}tdB_t$. We note that this is an SDE with a 0-drift and diffusion coefficient $\sigma(t,x) = \sqrt{3}t$. The generator $\mathcal{L}$ of the diffusion is 
+$$\mathcal{L}f(t,x) = \frac{1}{2}\sigma^2(t,x)\frac{\partial^2 f}{\partial x^2} = \frac{3t^2}{2}\frac{\partial^2 f}{\partial x^2}$$
+Now, let $u(s,x):=\mathbb{E}[f(X_t) | X_s=x]$ for $s<t$ then $u(s,x)$ satisfies 
+$$\frac{\partial u}{\partial s}+\mathcal{L}_su = 0$$
+with $u(t,x) = f(x)$. So, the Kolmogorov backward equation is 
+$$\frac{\partial u}{\partial s} + \frac{3s^2}{2}\frac{\partial^2 u}{\partial x^2}=0$$
+Next, let $p(t,x,\cdot)$ be the transition density of $X_t$ which we found in \textbf{(a)}. The forward equation is then 
+$$\frac{\partial p}{\partial t} = \frac{1}{2}\frac{\partial^2}{\partial x^2}\sigma^2(t,x) p = \frac{3t^2}{2}\frac{\partial^2p}{\partial x^2}$$
+
+\begin{tcolorbox}
+[colframe=black,colback=gray!5,boxrule=0.5pt]
+    \textbf{c)} Verify that the transition density found in \textbf{(a)} satisfies the forward and backward equations found in \textbf{(b)}
+\end{tcolorbox}
+\textbf{Solution.} We know that the second derivative of a normal density with respect to its argument satisfies 
+$$\frac{\partial^2 p}{\partial y^2} = \left(\frac{(y-x)^2}{(t^3-s^3)^2} - \frac{1}{t^3 - s^3}\right)p$$
+So substituting into the forward equation, the right hand side becomes:  
+$$\frac{3t^2}{2} \frac{\partial^2 p}{\partial y^2} = \frac{3t^2}{2}\left(\frac{(y-x)^2}{(t^3-s^3)^2} - \frac{1}{t^3 - s^3}\right)p$$
+Next, we verify by computing the left hand side. We apply the chain rule with respect to $v:=t^3-s^3$ then 
+$$\frac{\partial p}{\partial t} = \frac{dp}{dv}\cdot \frac{dv}{dt}$$
+The derivative of a Normal distribution with respect to it's variance satisfies 
+$$\frac{dp}{dv} = \left(\frac{(y-x)^2}{2v^2} - \frac{1}{2v}\right)p$$
+So,
+$$\frac{\partial p}{\partial t} = 3t^2\left(\frac{(y-x)^2}{2v^2} - \frac{1}{2v}\right)p$$
+Which we see matches the right hand side, and so we have verified the Kolmogorov Forward Equation is satisfied. Next we verify the backwards equation: 
+$$\frac{\partial p}{\partial s} + \frac{3s^2}{2}\cdot \frac{\partial^2 p}{\partial x^2} = 0$$
+Again, we'll use $v = t^3 - s^3$ so $\frac{dv}{ds} = -3s^2$
+Then by the chain rule of calculus 
+$$\frac{\partial p}{\partial s} = \frac{dp}{dv}\cdot \frac{dv}{ds} = -3s^2\left(\frac{(y-x)^2}{2v^2} - \frac{1}{2v}\right)p$$
+By symmetry, the second derivative of $x$ is the same as in $y$ so
+$$\frac{\partial^2 p}{\partial x^2} = \left(\frac{(y-x)^2}{(t^3-s^3)^2} - \frac{1}{t^3 - s^3}\right)p$$
+So, 
+$$\frac{3s^2}{2}\frac{\partial^2 p}{\partial x^2} = 3s^2\left(\frac{(y-x)^2}{(t^3-s^3)^2} - \frac{1}{t^3 - s^3}\right)p = -\frac{\partial p}{\partial s}$$
+So the backward equation is also satisfied. $\square$
+
 \newpage
 \bibliographystyle{plain} 
 \bibliography{references}  % Assumes a references.bib file

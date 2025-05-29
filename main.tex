@@ -417,6 +417,18 @@ Thus, $X_t$ is an Itô process with $\sigma_t = t$. It follows that the quadrati
 \end{align*}
 From here, it is clear that $2 = b^2-a$ and $-1 = b$. Thus, $a=b=-1$. $\square$
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t = \int_0^t (ts)^2dB_s$. Find $dX_t$ and the quadratic variation $[X,X](t)$.
+\end{tcolorbox}
+\textbf{Solution.} Let $f(t,s) = t^2s^2$. By the Leibniz rule 
+\begin{align*}
+    dX_t &= f(t,t)dB_t + \int_0^t \frac{\partial}{\partial t}f(s,t) dB_sdt  \\
+         &= t^4dB_t + \int_0^t 2ts^2dB_sdt \\
+         &= t^4dB_t + 2t \left(\int_0^t s^2dB_s\right)dt
+\end{align*}
+For the Quadratic Variation, $X_t$ is an Itô process with $\sigma(s,t) = t^2 s^2$ so
+$$[X,X]_t = \int_0^t \sigma(s,t)^2 ds = t^4\int_0^t s^4ds = \frac{t^9}{5}$$
+
 
 \newpage
 \section{Stochastic Differential Equations}
@@ -510,8 +522,53 @@ Thus, the solution to the SDE is
 \textbf{Solution.} Recall that $\mathcal{E}(X_t) = \exp(X_t - X_0 + \frac{1}{2}[X,X]_t)$. So $\mathcal{E}(B_t) = \exp(B_t - t/2).$ We 
 
 \newpage
+\section{Diffusion Processes}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $\{X_t\}$ be a diffusion with $\mu(x) = 2x$ and $\sigma^2(x) = 4x$. Write the generator, solve $Lf=0$ and find a martingale.  
+\end{tcolorbox}
+\textbf{Solution.} The generator is given by
+$$Lf(x) = 2x f^\prime(x) + 2xf^{\prime\prime}(x)$$
+Setting $Lf=0$ and rearranging we find $f^{\prime \prime}(x) = -f^\prime(x)$. One can do some \textit{correct} things by applying some ODE theorems, but this isn't a class in Differential Calculus so I prefer to just notice that it has to be of the form $f(x) = e^{-x}$. One can easily verify this. Once accounting for possible constants we are left with 
+$$f(x) = C_0 + C_1e^{-x}$$
+as the solution. 
+
+
+\newpage
+\section{Change of Probability Measure}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Define $W_t = \mu t + B_t$ for a $\mathbb{P}$-Brownian Motion $B_t$. Define $W_t^*:=\max_{s\leq t} W_s$. Find the distribution of $W_t^*$
+\end{tcolorbox}
+\textbf{Solution.} The intuition is that we can't follow the same argument for finding the maximum of Brownian Motion, as $W_t$ is no longer a martingale. Instead, we'll apply a change of Measure to swap to probability measure where it is a martingale. 
+
+
+
+
+\newpage
 \section{Applications to Finance}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} In the Binomial Pricing Model, show that the stock price can be expressed $S_t = \xi_tS_{t-1}$ where the $\xi_i$ are independent and identically distributed.   \cite{Fima}
+\end{tcolorbox}
+\textbf{Solution.}
+Recall that in the Binomial Pricing Model, the stock can transition either $S_{t} \to uS_t$ or $S_t \to dS_t$. Define the random variable $\xi_i$ according to 
+\[ \xi_i = \begin{cases} 
+      u & \frac{u-r}{u-d} \\
+      d & \frac{r-d}{u-d}
+   \end{cases}
+\]
+Then it is clear that $S_{t+1} = S_0\prod_{i=1}^{t}\xi_i$. $\square$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that the Binomial Model does not admit arbitrage $\iff$ $d<r<u.$
+\end{tcolorbox}
+\textbf{Proof.}
+$(\Rightarrow)$. Suppose the model does not admit arbitrage. Then by the first fundamental theorem of asset pricing, there exists a probability measure $\mathbb{Q}$ such that the process $S_t / r^t$ is a martingale. Define $p:= \frac{u-r}{u-d}$ then we have 
+\begin{align*}
+    E_\mathbb{Q}\left[\frac{S_t}{r^t} | \mathcal{F}_{t-1}\right]
+\end{align*}
+ 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $S_1$ and $S_2$ be two non-dividend paying stocks that evolving according to geometric Brownian motion. Find a stochastic differential for $S_1 + S_2$ when $S_1$ and $S_2$ are independent, and when they share correlation equivalent $\rho$.  \cite{Hull}
 \end{tcolorbox}
