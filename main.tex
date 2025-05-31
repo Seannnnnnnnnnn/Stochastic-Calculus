@@ -331,6 +331,25 @@ $$\mathbb{P}(\min_{s\in[0,t]} B_t\leq x) = 2\mathbb{P}(B_t\leq x).$$
 \end{tcolorbox}
 \textbf{Proof.} 
 
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find the joint density of $M_t := \max_{s\leq t} B_s$ and $B_t$.
+\end{tcolorbox}
+\textbf{Solution.} Let $y > x$ and define $\tau_y := \inf_{t}\{B_t \geq y\}$. As usual, note that $\{M_t \geq y\} = \{\tau_y\leq t\}$. Consider 
+$$P(M_t\geq y, B_t\leq x) = P(\tau_y\leq t, B_t\leq x)$$
+This means that, $B_t$ hits some level $y$ then descends back below $x$ on $\{\tau_y\leq t\}$. Recall that by the reflection principle, we now have 
+\begin{align*}
+    \{\hat{B}_t \leq x\} &= \{2B_{\tau} - B_t \leq x\} \\
+    &= \{B_t\geq 2B_\tau - x\} \\
+    &= \{B_t\geq 2y - x\}
+\end{align*}
+so, 
+\begin{align*}
+    P(\tau_y\leq t, B_t\leq x) &= P(\tau_y\leq t, B_t\geq2y- x) \\
+    &= P(B_{t}\geq 2y-x) \\
+    &= 1 - \Phi\left(\frac{2y-x}{\sqrt{t}}\right)
+\end{align*}
+
 \newpage
 \section{Brownian Motion Calculus}
 
@@ -538,9 +557,21 @@ as the solution.
 \section{Change of Probability Measure}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that if $Q$ is equivalent to $P$ and $X\geq0$ then $E_PX > 0 $ implies $E_QX>0$ and vice-versa. 
+\end{tcolorbox}
+\textbf{Proof.} 
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Define $W_t = \mu t + B_t$ for a $\mathbb{P}$-Brownian Motion $B_t$. Define $W_t^*:=\max_{s\leq t} W_s$. Find the distribution of $W_t^*$
 \end{tcolorbox}
 \textbf{Solution.} The intuition is that we can't follow the same argument for finding the maximum of Brownian Motion, as $W_t$ is no longer a martingale. Instead, we'll apply a change of Measure to swap to probability measure where it is a martingale. 
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Give the Radon-Nikodym Derivative in the change to the EMM $\mathbb{Q}$ in the Black-Scholes model. 
+\end{tcolorbox}
+\textbf{Solution.} 
 
 
 
@@ -570,9 +601,40 @@ $(\Rightarrow)$. Suppose the model does not admit arbitrage. Then by the first f
 \end{align*}
  
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Define what it means for a Market-Model to be \textit{Complete}. Show that the Binomial Model is complete. 
+\end{tcolorbox}
+\textbf{Solution.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Give an example of a model which is not complete. 
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Define the discounted price process. Show that in the Black-Scholes model, the discounted price-process is a martingale if and only if $\mu = r$.
+\end{tcolorbox}
+\textbf{Solution.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $S_1$ and $S_2$ be two non-dividend paying stocks that evolving according to geometric Brownian motion. Find a stochastic differential for $S_1 + S_2$ when $S_1$ and $S_2$ are independent, and when they share correlation equivalent $\rho$.  \cite{Hull}
 \end{tcolorbox}
 \textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Black-Scholes Via the EMM). Using an equivalent martingale measure and assumptions of the Black-Scholes model, show that the price of a Call option struck at $K$ satisfies
+$$C_t = S_t\Phi(h_t) - Ke^{-r(T-t)}\Phi(h_t-\sigma\sqrt{T-t})$$
+where 
+$$h_t = \frac{\ln\frac{S_t}{K} + (r+\frac{1}{2}\sigma^2)(T-t)}{\sigma\sqrt{T-t}}$$
+\end{tcolorbox}
+\textbf{Proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Black-Scholes Via the PDE). 
+\end{tcolorbox}
+\textbf{Proof.}
+
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Suppose $S_t$ follows geometric brownian motion and let $G$ be a function of $S_t$ and $t$. Show that when the expected return of $S_t$ increases by $\lambda \sigma _S$ the expected return of $G$ grows by $\lambda \sigma _G$. \cite{Hull}
