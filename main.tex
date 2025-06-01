@@ -331,6 +331,12 @@ $$\mathbb{P}(\min_{s\in[0,t]} B_t\leq x) = 2\mathbb{P}(B_t\leq x).$$
 \end{tcolorbox}
 \textbf{Proof.} 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $\tau_w :=\inf\{t\geq 0 : W_t=w\}$ for a standard Brownian Motion $W_t$. Using the reflection principle, show that 
+$$\mathbb{P}(\tau_w\leq t) = 1 + \Phi\left(-\frac{|w|}{\sqrt{t}}\right) - \Phi\left(\frac{|w|}{\sqrt{t}}\right)$$
+\end{tcolorbox}
+\textbf{Proof.}
+
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find the joint density of $M_t := \max_{s\leq t} B_s$ and $B_t$.
@@ -350,8 +356,57 @@ so,
     &= 1 - \Phi\left(\frac{2y-x}{\sqrt{t}}\right)
 \end{align*}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $B_t$ be a standard Brownian Motion. Show that $\text{Cov}(B_t,B_s) = \min\{s,t\}$ and deduce the correlation coefficient of $B_s$ and $B_t$ is $$\rho=\sqrt{\frac{\min\{s,t\}}{\max\{s,t\}}}$$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Time Reversal) let $W_t: t\geq0$ be a standard Brownian Motion. Show that under the time reversal $B_t := W_1 - W_{1-t}$is also a standard Brownian Motion.
+\end{tcolorbox}
+\textbf{Proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $\{W_t : t\geq0 \}$ be a standard Brownian Motion. Show that the covariance of $\int_0^s W_udu$ and $\int_0^t W_vdv$ satisfies
+$$\text{Cov}\left(\int_0^s W_udu, \int_0^t W_vdv\right) = \frac{1}{3}\min\{s^3, t^3\} + \frac{1}{2}|t-s|\min\{t^2, s^2\}$$
+\end{tcolorbox}
+\textbf{Proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $\{W_t : t\geq0 \}$ be a standard Brownian Motion. Show that it has finite quadratic variation such that 
+$$[W,W]_t = \lim_{n\to\infty}\sum_{i=0}^{n-1}(W_{t_{i+1}} - W_{t_i})^2 = t$$
+Then, deduce that $dW_t\cdot dW_t = dt.$
+\end{tcolorbox}
+\textbf{Proof.} We can use an interesting strategy to show this: We'll set the random variable $X_t := [W,W]_t$ then show that $\mathbb{E}X_t = t$ and $\text{Var}(X_t)=0$ as $n\to\infty$ leaving us with $X_t=t$ in probability.
+
+
+
 \newpage
 \section{Brownian Motion Calculus}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let the Itô integral of $W_tdW_t$ be defined by the following limit
+$$I(t) = \int_0^tW_sdW_s = \lim_{n\to\infty}\sum_{i=0}^{n-1}W_{t_i}(W_{t_{i+1}} - W_{t_i})$$
+Show that $I(t) = \frac{1}{2}(W_t^2-t)$. Finally, show that the Itô integral is a martingale.
+\end{tcolorbox}
+\textbf{Proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Recall that the stochastic Itô integral with respect to standard Brownian Motion for a simple function $f$ is defined as 
+$$I_t = \int_0^t f(W_s,s)dW_s = \lim_{n\to\infty}\sum_{i=1}^{n-1}f(W_{t_i}, t_i)(W_{t_{i+1}} - W_{t_i})$$
+Using the properties of standard Brownian Motion, show that $I_t$ is a martingale.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Recall that the stochastic Itô integral with respect to standard Brownian Motion for a simple function $f$ is defined as 
+$$I_t = \int_0^t f(W_s,s)dW_s = \lim_{n\to\infty}\sum_{i=1}^{n-1}f(W_{t_i}, t_i)(W_{t_{i+1}} - W_{t_i})$$
+Using the properties of the standard Brownian Motion, show that the Itô Integral process has mean 0. That is, 
+$$\mathbb{E}\left(\int_0^t f(W_s,s)dW_s\right) =0$$
+\end{tcolorbox}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $X_t=-1$ on $0\leq t\leq1$, $X_t=1$ on $1 < t\leq2$ and $X_t=2$ on $2 < t\leq3$. Find the distribution of $\int_0^3X_sdB_s$. \cite{Fima}
@@ -448,6 +503,36 @@ From here, it is clear that $2 = b^2-a$ and $-1 = b$. Thus, $a=b=-1$. $\square$
 For the Quadratic Variation, $X_t$ is an Itô process with $\sigma(s,t) = t^2 s^2$ so
 $$[X,X]_t = \int_0^t \sigma(s,t)^2 ds = t^4\int_0^t s^4ds = \frac{t^9}{5}$$
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $W_t : t\geq0$ be a Wiener process the stochastic integral with respect to a standard Wiener process can be defined as 
+$$\int_0^ts dW_s = \lim_{n\to\infty}\sum_{i=0}^{n-1}t_i(W_{t_{i+1} } - W_{t_i})$$
+Show that 
+$$\int_0^tsdW_s = tW_t - \int_0^tW_sds.$$
+\end{tcolorbox}
+\textbf{Proof.} One can apply Itô's lemma to $tW_t$ for a simple solution. Using the definition provided
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Consider the process 
+$$
+B_t = \begin{cases}
+    0 & t=0 \\
+    \frac{\sqrt{3}}{t}\int_0^tW_s ds & t>0
+\end{cases}
+$$
+is $B_t$ a standard Wiener process? 
+\end{tcolorbox}
+\textbf{Solution.}
+
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Using integration by parts, show that 
+$$\int_0^tW_sds = \int_0^t(t-s)dW_s$$
+and prove that $\int_0^t W_sds\sim N(0, t^3/3)$. 
+\end{tcolorbox}
+\textbf{Proof.}
+
 
 \newpage
 \section{Stochastic Differential Equations}
@@ -456,32 +541,6 @@ $$[X,X]_t = \int_0^t \sigma(s,t)^2 ds = t^4\int_0^t s^4ds = \frac{t^9}{5}$$
 \textbf{Question:} Let $\Phi$ be the standard normal cumulative distribution functoin. Show that the process $X_t := \Phi(\frac{B_t}{\sqrt{T-t}})$ for $0\leq t<T$ is a martingale for a fixed $T$.
 \end{tcolorbox}
 \textbf{Proof.}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
