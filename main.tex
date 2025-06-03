@@ -5,6 +5,7 @@
 \usepackage{tcolorbox} 
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{enumitem}
 
 \hypersetup{
     colorlinks=true,
@@ -246,10 +247,6 @@ To see that Brownian Motion satisfies the Markov Property let $s <t$ and conside
 \end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} (Exit Time and Probability of Brownian Motion) 
-\end{tcolorbox}
-
-\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $s < t$, find the distribution of $B_s | B_t = b$.
 \end{tcolorbox}
 \textbf{Solution.} The \textit{trick} to this problem is to recognize that $(B_s, B_t)$ is multivariate normal then apply the \href{https://online.stat.psu.edu/stat505/lesson/6/6.1}{formulae for conditional distributions of multivariate Gaussians}. That is: 
@@ -266,21 +263,16 @@ To see that Brownian Motion satisfies the Markov Property let $s <t$ and conside
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} By considering $M_t := \max_{0\leq s \leq t} B_s$ and $T_a$ be the first time that $B_t$ hits $a > 0$. Prove that $P(\tau_x\leq t) = P(|B_t|\geq x)$  
 \end{tcolorbox}
-\textbf{Proof.}
-
-\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Show that $|B_t| \stackrel{d}{=} \max_{0\leq s\leq t} B_s$.
-\end{tcolorbox}
-\textbf{Proof.} For notional simplicity let $X_t := \max_{s\in[0,t]} B_s$ and define the stopping time for the first time $B_t$ hits the level $\alpha$. That is, $\tau_\alpha := \inf_{t>0}\{B_t = \alpha\}$. One can see that $\{X_t\geq\alpha\} = \{\tau_\alpha \leq t\}$. We can now calculate
+\textbf{Proof.} Begin by noting that $\{T_a\leq t\} = \{M_t\geq a\}$. Then
 \begin{align*}
-    \mathbb{P}(\tau_\alpha \leq t) &= \mathbb{P}(\tau_\alpha\leq t, B_t \geq \alpha) + \mathbb{P}(\tau_\alpha\leq t, B_t < \alpha) \\
-    &= 2\mathbb{P}(\tau_\alpha\leq t, B_t \geq \alpha) \\
-    &= 2\mathbb{P}(X_t\geq \alpha, B_t\geq \alpha) \hspace{10mm}\text{{Substituting $\{X_t\geq\alpha\} = \{\tau_\alpha \leq t\}$}} \\
-    &= 2\mathbb{P}(B_t\geq \alpha) \\
-    &= \mathbb{P}(B_t\geq \alpha) + \mathbb{P}(B_t\leq -\alpha) \\
-    &=\mathbb{P}(|B_t|\geq\alpha)
+    \mathbb{P}(T_a\leq t) &= \mathbb{P}(T_a\leq t, B_t\geq a) + \mathbb{P}(T_a\leq t, B_t< a) \\
+    &= 2\mathbb{P}(T_a\leq t, B_t\geq a) \hspace{10mm} \text{Reflection Principle} \\
+    &= 2\mathbb{P}(M_t\geq a, B_t\geq a) \\
+    &= 2\mathbb{P}(B_t\geq a) \\
+    &= \mathbb{P}(B_t> a) + \mathbb{P}(B_t <-a) \\
+    &= \mathbb{P}(|B_t| > a)
 \end{align*}
-Thus, we can see that $\mathbb{P}(X_t\geq\alpha) = \mathbb{P}(|B_t|\geq\alpha)$ to complete the proof. $\square$
+Therefore, $M_t \stackrel{d}{=} |B_t|$ as claimed. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Prove the law of large numbers for Brownian Motion
@@ -329,17 +321,38 @@ We're now pretty much done. All that remains is to write this in the desired for
 \textbf{Question:} Show that for any $x<0$ 
 $$\mathbb{P}(\min_{s\in[0,t]} B_t\leq x) = 2\mathbb{P}(B_t\leq x).$$
 \end{tcolorbox}
-\textbf{Proof.} 
+\textbf{Proof.} For $x > 0$ we have by the reflection principle 
+$$\mathbb{P}(\max_{s\leq t}B_s\geq x) = 2\mathbb{P}(B_t\geq x)\quad\quad (1)$$
+Recall that for any standard Brownian Motion, $-B_t$ is also a standard Brownian motion, so $\max_{s\leq t}B_s$ has the same distribution as $\max_{s\leq t}-B_s$. It then follows from $(1)$ for $x>0$
+$$\mathbb{P}(\max_{s\leq t}-B_s) = 2\mathbb{P}(-B_t\geq x)$$
+Finally, recall that $-\max_{s\leq t} -B_s = \min_{s\leq t} B_s$ so we have 
+$$\mathbb{P}(\min_{s\leq t}B_s\leq-x) = 2\mathbb{P}(B_t\leq -x)$$
+Since $x>0$ was arbitrary, we can write the above as $\mathbb{P}(\min_{s\leq t}B_s\leq y) = 2\mathbb{P}(B_t\leq y)$ for arbitrary $y<0$. $\square$
+
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $\tau_w :=\inf\{t\geq 0 : W_t=w\}$ for a standard Brownian Motion $W_t$. Using the reflection principle, show that 
 $$\mathbb{P}(\tau_w\leq t) = 1 + \Phi\left(-\frac{|w|}{\sqrt{t}}\right) - \Phi\left(\frac{|w|}{\sqrt{t}}\right)$$
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} This exercise requires a bit of care, and needs to be split up into the case where $w\geq0$ and $w<0$. Starting with the first case, by the reflection principle for $w\geq0$
+\begin{align*}
+    \mathbb{P}(T_w\leq t) &= 2\mathbb{P}(B_t\geq w)  \\
+    &= \mathbb{P}(B_t > w) + \mathbb{P}(B_t < -w) \\
+    &= 1 - \Phi\left(\frac{w}{\sqrt{t}}\right) + \Phi\left(-\frac{w}{\sqrt{t}}\right)
+\end{align*}
+Next, we assume that $w < 0$. Since $-B_t$ is also a standard Brownian Motion, we have similar to before 
+\begin{align*}
+    \mathbb{P}(T_w\leq t)&= 2\mathbb{P}(-B_t<w) \hspace{10mm} \text{for $w<0$} \\
+    &= \mathbb{P}(-B_t<w) + \mathbb{P}(B_t > -w) \\
+    &= \mathbb{P}(-B_t<w) + 1-\mathbb{P}(B_t\leq-w) \\
+    &= 1-\Phi\left(-\frac{w}{\sqrt{t}}\right)+\Phi\left(\frac{w}{\sqrt{t}}\right)
+\end{align*}
+Combine both cases to have the result. $\square$
+
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Find the joint density of $M_t := \max_{s\leq t} B_s$ and $B_t$.
+\textbf{Question:} Find the joint density of $M_t := \max_{s\leq t} B_s$ and $B_t$. \cite{Fima}
 \end{tcolorbox}
 \textbf{Solution.} Let $y > x$ and define $\tau_y := \inf_{t}\{B_t \geq y\}$. As usual, note that $\{M_t \geq y\} = \{\tau_y\leq t\}$. Consider 
 $$P(M_t\geq y, B_t\leq x) = P(\tau_y\leq t, B_t\leq x)$$
@@ -359,13 +372,24 @@ so,
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $B_t$ be a standard Brownian Motion. Show that $\text{Cov}(B_t,B_s) = \min\{s,t\}$ and deduce the correlation coefficient of $B_s$ and $B_t$ is $$\rho=\sqrt{\frac{\min\{s,t\}}{\max\{s,t\}}}$$
 \end{tcolorbox}
-\textbf{Proof.}
-
+\textbf{Proof.} For the covariance, assume $s<t$ then
+\begin{align*}
+    \text{Cov}(B_t,B_s) = \mathbb{E}[B_sB_t] &= \mathbb{E}[B_s^2+B_s(B_t-B_s)] \\
+    &= E[B_s^2] \\
+    &=s
+\end{align*}
+since $s<t$ was arbitrary, we conclude Cov$(B_s,B_t)$ = $\min(s,t)$. For the coefficient of correlation
+\begin{align*}
+    \rho = \frac{\text{Cov}(B_t,B_s)}{\sqrt{\text{Var}(B_t)\text{Var}(B_s)}} = \frac{\min(s,t)}{\sqrt{st}}
+\end{align*}
+Suppose $s<t$ then 
+$$\rho = \frac{s}{\sqrt{st}} = \sqrt{\frac{s}{t}}$$
+and analogously for if $t<s$. We therefore conclude that  $\rho=\sqrt{\frac{\min\{s,t\}}{\max\{s,t\}}}$. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} (Time Reversal) let $W_t: t\geq0$ be a standard Brownian Motion. Show that under the time reversal $B_t := W_1 - W_{1-t}$is also a standard Brownian Motion.
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} $B_t$ is the sum of contiuos processes' so is itself continuous. 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $\{W_t : t\geq0 \}$ be a standard Brownian Motion. Show that the covariance of $\int_0^s W_udu$ and $\int_0^t W_vdv$ satisfies
@@ -382,15 +406,73 @@ Then, deduce that $dW_t\cdot dW_t = dt.$
 
 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that $|B_t| \stackrel{d}{=} \max_{0\leq s\leq t} B_s$.
+\end{tcolorbox}
+\textbf{Proof.} For notional simplicity let $X_t := \max_{s\in[0,t]} B_s$ and define the stopping time for the first time $B_t$ hits the level $\alpha$. That is, $\tau_\alpha := \inf_{t>0}\{B_t = \alpha\}$. One can see that $\{X_t\geq\alpha\} = \{\tau_\alpha \leq t\}$. We can now calculate
+\begin{align*}
+    \mathbb{P}(\tau_\alpha \leq t) &= \mathbb{P}(\tau_\alpha\leq t, B_t \geq \alpha) + \mathbb{P}(\tau_\alpha\leq t, B_t < \alpha) \\
+    &= 2\mathbb{P}(\tau_\alpha\leq t, B_t \geq \alpha) \\
+    &= 2\mathbb{P}(X_t\geq \alpha, B_t\geq \alpha) \hspace{10mm}\text{{Substituting $\{X_t\geq\alpha\} = \{\tau_\alpha \leq t\}$}} \\
+    &= 2\mathbb{P}(B_t\geq \alpha) \\
+    &= \mathbb{P}(B_t\geq \alpha) + \mathbb{P}(B_t\leq -\alpha) \\
+    &=\mathbb{P}(|B_t|\geq\alpha)
+\end{align*}
+Thus, we can see that $\mathbb{P}(X_t\geq\alpha) = \mathbb{P}(|B_t|\geq\alpha)$ to complete the Proof. $\square$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Calculate $\mathbb{E}[B_sB_uB_t]$ for $0<s<t<u.$
+\end{tcolorbox}
+\textbf{Solution.} The vector $(B_s, B_t, B_u)\sim N(0,\Sigma)$ where 
+\[
+\Sigma = \begin{pmatrix}
+E[B_s^2] & E[B_s B_t] & E[B_s B_u] \\
+E[B_t B_s] & E[B_t^2] & E[B_t B_u] \\
+E[B_u B_s] & E[B_u B_t] & E[B_u^2]
+\end{pmatrix}
+= 
+\begin{pmatrix}
+s & s & s \\
+s & t & t \\
+s & t & u
+\end{pmatrix}.
+\]
+One can then invoke \href{https://en.wikipedia.org/wiki/Isserlis%27s_theorem}{Isserlis' Theorem} to deduce that, since the length of the product is odd, the mean must be 0. \\
+\\
+The alternative approach is to tackle it algebraically. Since $0<s<t<u$ we write
+\begin{align*}
+    B_sB_tB_u &= B_s(B_s+(B_t-B_s))(B_t+(B_u-B_t)) \\
+    &= (B_s^2 + B_s(B_t-B_s))(B_t+(B_u-B_t)) \\
+    &= B_s^2B_t + B_s^2(B_u-B_t)+B_sB_t(B_t-B_s) + B_s(B_t-B_s)(B_u-B_t) \quad\quad (1)
+\end{align*}
+Since $B_t\perp B_u-B_t$ and $B_s \perp B_t-B_s \perp B_u-B_t$ when we take expectation of (1) we are left with
+$$\mathbb{E}[B_s^2B_t] + \mathbb{E}[B_s B_t(B_t-B_s)]$$
+Splitting up the first term
+$$B_s^2B_t = B_s^2 (B_s + (B_t-B_s)) = B_s^3 + B_s^2(B_t-B_s)$$
+Which after taking expectation, we are left with $\mathbb{E}[B_s^3].$ For the second term, we have 
+\begin{align*}
+    B_sB_t(B_t-B_s)&=B_s(B_s+(B_t-B_s))(B_t-B_s) \\
+    &=B_s^2(B_t-B_s)+B_s(B_t-B_s)^2
+\end{align*}
+which vanishes after taking expectation. Thus we are left with 
+$$\mathbb{E}[B_sB_tB_u] = \mathbb{E}[B_s^3]=0$$
+Since it is an odd moment of a $N(0,s)$ Gaussian distribution.
 \newpage
 \section{Brownian Motion Calculus}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let the Itô integral of $W_tdW_t$ be defined by the following limit
 $$I(t) = \int_0^tW_sdW_s = \lim_{n\to\infty}\sum_{i=0}^{n-1}W_{t_i}(W_{t_{i+1}} - W_{t_i})$$
-Show that $I(t) = \frac{1}{2}(W_t^2-t)$. Finally, show that the Itô integral is a martingale.
+Show that $I(t) = \frac{1}{2}(W_t^2-t)$.
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} Completing the square on $W_{t_i}(W_{t_{i+1}} - W_{t_i})$
+\begin{align*}
+    I_t &= \lim_{n\to\infty}\sum_{i=0}^{n-1}W_{t_i}(W_{t_{i+1}} - W_{t_i}) \\
+    &= \lim_{n\to\infty}\sum_{i=0}^{n-1}\frac{1}{2}((W_{t_{i+1}}^2-W_{t_i}^2) - (W_{t_{i+1}} - W_{t_i})^2) \\
+    &= \frac{1}{2}\left(\lim_{n\to\infty}\sum_{i=0}^{n-1}W_{t_{i+1}}^2-W_{t_i}^2 - \lim_{n\to\infty}\sum_{i=0}^{n-1}(W_{t_{i+1}}-W_{t_i})^2\right) \\
+    &= \frac{1}{2}\left(\lim_{n\to\infty}(W_{t_n}^2 - W_{t_0}^2) -  \lim_{n\to\infty}\sum_{i=0}^{n-1}(W_{t_{i+1}}-W_{t_i})^2\right)
+\end{align*}
+for the first term $W_{t_n}^2\to W_t^2$ as $n\to\infty$. For the second term, one recognizes this is the definition of the Quadratic Variation for Brownian Motion, so the entire expression collapses to $I_t = \frac{1}{2}(W_t^2-t)$. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Recall that the stochastic Itô integral with respect to standard Brownian Motion for a simple function $f$ is defined as 
@@ -428,7 +510,14 @@ Hence we conclude $\int_0^3X_sdB_s\sim N(0,6).$
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} By finding a suitable sequence of Simple Adapted Processes, find $\int_0^T B_s dB_s$. \cite{Fima}
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} Let $0=t_0<t_1<\dots,t_n=t$ and write
+\begin{align*}
+    \int_0^tB_sdB_s &= \lim_{n\to\infty}\sum_{i=0}^{n-1}B_{t_i}(B_{t_{i+1}} - B_{t_i}) \\
+    &= \lim_{n\to\infty}\sum_{i=0}^{n-1}\frac{1}{2}(B_{t_{i+1}}^2 - B_{t_i}^2 - (B_{t_{i+1}} - B_{t_i})^2) \quad\quad \text{by completing the square} \\
+    &= \frac{1}{2}\left(\lim_{n\to\infty}B_{t_{n}}^2 - B_{t_0}^2 - \lim_{n\to\infty}\sum_{i=0}^{n-1}(B_{t_{i+1}} - B_{t_i})^2\right) \\
+    &= \frac{1}{2}(B_t^2-t)
+\end{align*}
+Where the final inequality comes from the definition of quadratic variation for Brownian Motion. 
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -444,13 +533,7 @@ From here, one clearly sees this integral is finite provided $\alpha < 1/2.$ $\s
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find the Stochastic Differential $d(Y_t / Z_t)$ where $Y_t = tB_t$ and $Z_t=e^{B_t}$ using Itô's formula. \cite{Fima}
 \end{tcolorbox}
-\textbf{Solution.} For exercises like this, the approach is: 
-\begin{enumerate}
-    \item Identify a suitable function $f$ to apply Itô's formula to. 
-    \item Compute the partial derivatives of $f$. 
-    \item Compute the differentials $dZ_t$ and $dY_t$. 
-    \item Substitute everything in and cross cancel. 
-\end{enumerate}
+\textbf{Solution.} let $f(y,z) = y/z$. 
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -462,7 +545,7 @@ $$dX_tY_t = Y_tdX_t + X_tdY_t + \sigma_X(t)\sigma_Y(t)dt.$$
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Suppose $X_t = (1-t)\int_0^t\frac{dB_s}{1-s}$, where $0\leq t<1$. Find $dX_t$
 \end{tcolorbox}
-\textbf{Solution.} This can appears a little intimidating, but the trick is to just realise it is a product of two component, and we can apply Itô's lemma to the function $f(x,y) = xy$.
+\textbf{Solution.} 
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -525,11 +608,29 @@ is $B_t$ a standard Wiener process?
 \textbf{Solution.}
 
 
-
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Using integration by parts, show that 
 $$\int_0^tW_sds = \int_0^t(t-s)dW_s$$
 and prove that $\int_0^t W_sds\sim N(0, t^3/3)$. 
+\end{tcolorbox}
+\textbf{Proof.} Consider $X_t = tW_t$. Stochastic integration by parts comes from the product rule: 
+$$dX_t = dtW_t = tdW_t +W_tdt$$
+Integrating both sides 
+$$X_t - X_0 = \int_0^t sdW_s + \int_0^t W_sds$$
+Since $X_0 = 0$ we can move the first term on the right hand side over and substitute $X_t = tW_t$ to find 
+\begin{align*}
+    tW_t - \int_0^tsdW_s = \int_0^t(t-s)dW_s = \int_0^tW_sds.
+\end{align*}
+The Itô integral $\int_0^t(t-s)dW_s$ is Gaussian, so we know that $\int_0^tW_sds$ must be normally distributed. From the properties of the Itô integral, we know that the mean is zero and variance is given by 
+\begin{align*}
+    \text{Var}\left(\int_0^tW_sds\right) &= \text{Var}\left(\int_0^t(t-s)dW_s\right) \\
+    &= \int_0^t(t-s)^2ds \\
+    &= \frac{t^3}{3}
+\end{align*}
+So $\int_0^tW_sds\sim N(0,t^3/3)$. $\square$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t = \int_0^t(t-s)dB_s$. Find $dX_t$ and the quadratic variation $[X,X]_t$. Compare to the Quadratic Variation of Itô Integrals.
 \end{tcolorbox}
 \textbf{Proof.}
 
@@ -538,37 +639,39 @@ and prove that $\int_0^t W_sds\sim N(0, t^3/3)$.
 \section{Stochastic Differential Equations}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Let $\Phi$ be the standard normal cumulative distribution functoin. Show that the process $X_t := \Phi(\frac{B_t}{\sqrt{T-t}})$ for $0\leq t<T$ is a martingale for a fixed $T$.
+\textbf{Question:} Let $\Phi$ be the standard normal cumulative distribution functoin. Show that the process $$X_t := \Phi(\frac{B_t}{\sqrt{T-t}})$$ for $0\leq t<T$ is a martingale for a fixed $T$.
 \end{tcolorbox}
 \textbf{Proof.}
+
+
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that $X_t = X_0 e^{(\mu-\sigma^2/2)t + \sigma B_t}$ satisfies $dX_t =\mu X_t dt + \sigma X_t dB_t$.
 \end{tcolorbox}
-\textbf{proof.} The "classic" way to show this is to start with the stochastic differential and apply Itô's lemma with $f(t) = \ln t$
+\textbf{Proof.} The classic way to show this is to start with the stochastic differential and apply Itô's lemma with $f(t) = \ln t$
 \begin{align*}
     d\ln X_t  &= \frac{1}{X_t}(\mu X_t dt + \sigma X_t dB_t) - \frac{\sigma^2}{2}dt \\
               &= \left(\mu - \frac{\sigma^2}{2}\right)dt + \sigma dB_t
 \end{align*}
-Which implies by Itô's formula
+Now by integrating both sides
 \begin{align*}
     \ln X_t &= \ln X_0 + \left(\mu - \frac{\sigma^2}{2}\right)t + \sigma B_t \\
     &= X_0 \exp^{\left(\mu - \frac{\sigma^2}{2}\right)t + \sigma B_t}.
 \end{align*}
-Which completes the proof. $\square$
+Which completes the Proof. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that the solution to the \textit{Ornstein-Uhlenbeck} Process $dX_t = -\alpha X_tdt + \sigma dB_t$ is given by 
 $$X_t = e^{-\alpha t}\left(X_0 + \int_0^t\sigma e^{\alpha s}dB_s\right)$$
 \end{tcolorbox}
-\textbf{proof.}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that the unique solution to $dU_t = U_tdX_t$ is given by 
 $$\mathcal{E}(X_t) := U_t = e^{X_t - X_0 - \frac{1}{2}[X,X]_t}.$$
 \end{tcolorbox}
-\textbf{proof.}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Solve the SDE $dX_t = X_tB_tdt + X_tB_tdB_t, \quad X_0=1$.
@@ -589,7 +692,7 @@ Thus, the solution to the SDE is
 \end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Solve the SDE $dX_t = X_t dt + B_tdB_t, \quad X_0=1$.
+\textbf{Question:} Solve the SDE $dX_t = X_t dt + B_tdB_t, \quad X_0=1$. Comment on whether it is a diffusion type SDE. 
 \end{tcolorbox}
 \textbf{Solution.} 
 
@@ -599,8 +702,106 @@ Thus, the solution to the SDE is
 \end{tcolorbox}
 \textbf{Solution.} Recall that $\mathcal{E}(X_t) = \exp(X_t - X_0 + \frac{1}{2}[X,X]_t)$. So $\mathcal{E}(B_t) = \exp(B_t - t/2).$ We 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} For a constant $\theta$ find the SDE for the process $X_t = e^{\theta W_t - \frac{1}{2}\theta^2 t}$. By writing the SDE in integral form calculate $\mathbb{E}[e^{\theta W_t}]$, the moment generating function of the standard Wiener process. 
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Suppose $X_t$ follows the generalised SDE 
+$$dX_t = \mu(X_t,t)dt + \sigma(X_t,t)dW_t$$
+Show that $X_t$ is a martingale if $\mu(X_t,t)=0.$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Bachelier Model / Arithmetic Brownian Motion). Suppose that $X_t$ follows Arithmetic Brownian Motion with the SDE
+$$dX_t = \mu dt + \sigma dW_t$$
+Taking integrals show that for $t<T$
+$$X_T = X_t + \mu(T-t)+\sigma W_{T-t}$$
+Then deduce that $X_T|X_t=x\sim N(x+\mu(T-t),\sigma^2(T-t)).$
+\end{tcolorbox}
+\textbf{Proof.} Integrating both sides 
+$$\int_t^TdX_T = \int_t^T\mu dt + \int_t^T\sigma dW_t \implies X_T-X_t=\mu(T-t)+\sigma W_{T-t}$$
+where $W_{T-t} = W_T- W_t$. From here, it is trivial to condition on $X_t=x$ to find the distribution. $\square$
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Generalised Brownian Motion). Suppose that $X_t$ follows Generalised Geometric Brownian Motion with the SDE
+$$dX_t = \mu_tX_tdt + \sigma_tX_t dW_t$$
+Through Itô's lemma and taking integrals show that for $t<T$
+$$X_T = X_t\exp\left(\int_t^T\left(\mu_s-\frac{1}{2}\sigma_s^2\right)ds + \int_t^T\sigma_s dW_s\right)$$
+Find the mean and variance of $X_T$.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Generalised Ornstein-Uhlenbeck Process). Suppose that $X_t$ follows the Ornstein-Uhlenbeck process with SDE
+$$dX_t = \kappa(\theta-X_t)dt + \sigma dW_t$$
+By applying Itô's formula to $Y_t=e^{\kappa t}X_t$ and taking integrals show that for $t<T$,
+$$X_T = X_te^{-\kappa(T-t)}+\theta[1-e^{-\kappa(T-t)}] + \int_t^T\sigma e^{-\kappa(T-s)}dW_s$$
+Find the mean and variance of $X_T | X_t=x$ and deduce that $X_T$ follows a normal distribution.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Cox-Ingersoll-Ross (CIR) Model). Suppose that $X_t$ follows the so-called CIR model with SDE
+$$dX_t =\kappa(\theta-X_t)dt + \sigma\sqrt{X_t}dW_t$$
+With $X_0>$. By applying Itô's formula to $Z_t=e^{\kappa t}X_t$ and taking integrals show that for $t<T$,
+$$X_T = X_te^{-\kappa(T-t)}+\theta[1-e^{-\kappa(T-t)}] + \int_t^T\sigma e^{-\kappa(T-s)}\sqrt{X_s}dW_s$$
+Find the second moment of $X_T$, and the mean and variance of $X_T | X_t=x$.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} (Brownian Bridge Process). Suppose that $X_t$ follows the so-called Brownian Bridge process with SDE
+$$dX_t = \frac{y-X_t}{1-t}dt + dW_t$$
+With $X_1=y$ and the difussion is conditioned at $y$ at time $t=1$.
+By applying Itô's formula to $Y_t = (y-X_t)/(1-t)$ and taking integrals show that for $t<T$,
+$$X_t = yt + (1-t)\left(x+\int_0^t\frac{1}{1-s}dW_s\right)$$
+Find the mean an variance of $X_t| X_0=x$, and show that $X_t$ follows a Normal distribution.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t$ satisfy the SDE 
+$$dX_t = \sqrt{X_t+1}dB_t \quad\quad X_0=0$$
+Assuming that the Itô integrals are martingales, find $\mathbb{E}X_t$ and $\mathbb{E}X_t^2$. Let $m(u,t)=\mathbb{E}e^{uX_t}$ be the moment generating function of $X_t$. Show that $m(u,t)$ satisfies
+$$\frac{\partial m}{\partial t} = \frac{u^2}{2}\frac{\partial m}{\partial u} + \frac{u^2}{2}m$$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} By defining an appropriate process $V_t, t\geq0$ and letting $X_t = U_tV_t$ solve the SDE
+$$dX_t = (X_t+t)dt + (3X_t+B_t^2)dB_t, \quad X_0=1$$
+Comment on whether or not it is a diffusion type SDE. 
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find the stochastic logarithm of $B_t^2+1$
+\end{tcolorbox}
+\textbf{Solution.}
+
+
 \newpage
 \section{Diffusion Processes}
+
+Diffusion processes are the solutions of Stochastic Differential Equations. The main textbook I refer to \cite{Fima} dedicates an entire chapter to results on Diffusion Processes; though many of the exercises are really just applications of Itô's lemma. For consistency, I list some of the key exercises here so I know where to refer to them.
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that for any $u$, $f(x,t) = \exp(ux-u^2t/2)$ solves the backward equation for Brownian Motion. Show that 
+$$f_k(x,t) := \frac{d^k}{du^k}\exp(ux-u^2t/2)$$
+also solves the backward equation for Brownian Motion.
+\end{tcolorbox}
+\textbf{Proof.}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $\{X_t\}$ be a diffusion with $\mu(x) = 2x$ and $\sigma^2(x) = 4x$. Write the generator, solve $Lf=0$ and find a martingale.  
@@ -612,6 +813,55 @@ $$f(x) = C_0 + C_1e^{-x}$$
 as the solution. 
 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find an $f$ such that $f(B_t + t)$ is a martingale
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t$ be a diffusion with coefficients $\mu(x,t)$ and $\sigma(x,t)$. Find a differential equation for $f(x,t)$ such that $Y_t = f(X_t,t)$ has infintesimal diffusion coefficient equal to 1. 
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Suppose that $X_t$ is a diffusion with coefficients $\mu(x) = cx$ and $\sigma(x)=1$. Give its generator and show that $X_t^2-2c\int_0^tX_s^2ds-t$ for $t\geq0$ is a Martingale.
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Suppose $X_t$ is a diffusion process. Find the SDE for the process $Y_t = \sqrt{X_t}$ and give the generator for $Y_t$.
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} The following is a multipart problem. A diffusion process is given by the following SDE 
+$$dX_t = \mu(X_t,t)dt + \sigma(X_t,t)dB_t$$
+\begin{enumerate}[label=(\alph*)]
+    \item Find the generator $L_s$ of the process $X_t$
+    \item Compute the stochastic differential $df(X_t,t)$ where $f\in C^{2,1}(\mathbb{R}\times[0,\infty))$. 
+    \item Under suitable assumptions of smoothness use Itô's formula to show that the following process defines a Martingale:
+    $$M_f(t):=f(X_t,t)-\int_0^t(L_sf+\frac{\partial f}{\partial s}(X_s,s)ds.$$
+    \item Assume that $f$ satisfies the Backward Kolmogorov Equation. Using part (c), show that $f(X_t,t)$ is a Martingale. State Dynkin's formula for $\mathbb{E}f(X_t,t)$
+    \item for $0\leq t\leq T$. Suppose that $f$ solves the Backward Kolmogorov Equation and satisfies $f(x,T)=g(x)$. Show that $f(x,t) = \mathbb{E}[g(X_T)|X_t=x]$
+\end{enumerate}
+\end{tcolorbox}
+\textbf{Solution.} \\
+(a) The generator is defined as
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} The following is a multipart problem. A time-homogenous diffusion process is given by the following SDE 
+$$dX_t = \mu(X_t)dt + \sigma(X_t)dB_t$$
+set $P(y,t,x) := \mathbb{P}(X_t\leq y|X_0=x)$ and assume that $p(y,t,x)=\frac{\partial}{\partial y}P(y,t,x)$ exists.
+\begin{enumerate}[label=(\alph*)]
+    \item Under suitable conditions, write down the backward and forward Kolmogorov equations for the density $p$
+\end{enumerate}
+\end{tcolorbox}
+\textbf{Solution.} \\
+(a) The generator is defined as
+
+
+
 \newpage
 \section{Change of Probability Measure}
 
@@ -619,6 +869,7 @@ as the solution.
 \textbf{Question:} Show that if $Q$ is equivalent to $P$ and $X\geq0$ then $E_PX > 0 $ implies $E_QX>0$ and vice-versa. 
 \end{tcolorbox}
 \textbf{Proof.} 
+
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -662,7 +913,12 @@ $(\Rightarrow)$. Suppose the model does not admit arbitrage. Then by the first f
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Define what it means for a Market-Model to be \textit{Complete}. Show that the Binomial Model is complete. 
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} A model is \textit{complete} if any claim can be replicated. That is, there exists a replicating portfolio for every possible payoff. In the Binomial model, the only payoffs are $C_u, C_d$ which are the result of the stock price moving to $uS$ and $dS$ respectively. We set the simultaneous equations 
+\begin{align*}
+    & auS + br = C_u \\
+    & adS + br = C_d
+\end{align*}
+equal to each other.
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
