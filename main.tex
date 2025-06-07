@@ -496,6 +496,12 @@ Since it is an odd moment of a $N(0,s)$ Gaussian distribution.
 \textbf{Proof.}
 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+    \textbf{Question:} Derive the distribution of $B_t$  given the maximum $\max_{s\leq t} B_s$
+\end{tcolorbox}
+\textbf{Solution.}
+
+
 \newpage
 \section{Brownian Motion Calculus}
 
@@ -674,6 +680,13 @@ So $\int_0^tW_sds\sim N(0,t^3/3)$. $\square$
 \textbf{Proof.}
 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that 
+$$\mathbb{E}\left[\int_0^TX_tdB_t\int_0^TY_tdB_t\right] = \int_0^T\mathbb{E}Y_tX_tdt.$$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
 \newpage
 \section{Stochastic Differential Equations}
 
@@ -747,7 +760,10 @@ Thus, the solution to the SDE is
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Solve the SDE $dX_t = X_t dt + B_tdB_t, \quad X_0=1$. Comment on whether it is a diffusion type SDE. 
 \end{tcolorbox}
-\textbf{Solution.} 
+\textbf{Solution.} It's not a diffusion type SDE as the $dB_t$ term doesn't contain only on $t$ and $X_t$. To solve the SDE, apply Itô's lemma to $f(x,t) = e^{-t}x$ then 
+$$de^{-t}X_t = e^{-t}B_tdB_t$$
+Integrating both sides and rearranging we find 
+$$X_t = e^t\left(X_0 + \int_0^te^{-s}B_sdB_s\right)$$
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
