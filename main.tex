@@ -6,6 +6,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{enumitem}
+\usepackage{todonotes}
 
 \hypersetup{
     colorlinks=true,
@@ -34,9 +35,25 @@
     
 \end{titlepage}
 
-% Example sections (these will appear in the table of contents)
 \newpage
 \section{Ordinary Calculus}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that if $f$ has finite variation on an $[a,b]$ then $f$ must be bounded on $[a,b]$
+\end{tcolorbox}
+\textbf{Proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that if $f$ is monotone on $[a,b]$ then $V^f([a,b]) = |f(b)-f(a)|$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $g(x) = \sin x + \sqrt{3}\cos x$ on $0\leq x \leq \pi$. Find the variance of $g$ and a Jordan Decomposition of $g$.
+\end{tcolorbox}
+\textbf{Proof.}
+
 
 \newpage
 \section{Probability \& Measure Theory Fundamentals}
@@ -233,7 +250,11 @@ Thus with probability 1, we conclude that $B_t$ is nowhere differentiable. $\squ
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} (Fractal Scaling Property of Brownian Motion) Show that for any fixed $a>0$  the process $X_t = aB_{t/a^2}$ is itself a Brownian Motion.  
 \end{tcolorbox}
-
+\textbf{Proof.} We show that each of the Brownian Motion properties is satisfied. \\
+\\
+\text{Continuity}: $t\mapsto aB_{t/a^2}$ is a continuous. \\
+\text{Normal Increments}: Let $s<t$ then $X_t - X_s = a(B_{t/a^2} - B_{s/a^2}) \stackrel{d}{=} N(0,a^2(t-s)/a^2) = N(0,t-s).$
+Independent Increments: Inherited from $B_{t/a^2}$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} State and Prove the Markov Property for Brownian Motion.
@@ -254,10 +275,6 @@ To see that Brownian Motion satisfies the Markov Property let $s <t$ and conside
     & E[B_s | B_t=b] = \frac{s}{t}b \\
     &\text{Var}(B_s | B_t=b) = s-\frac{s^2}{t} = \frac{s(t-s)}{t}
 \end{align*}
-
-\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Show that for any $0\leq a < b<\infty$ Brownian Motion is non-monotone on the interval $[a,b]$ with probability 1.  
-\end{tcolorbox}
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -291,11 +308,6 @@ $$\lim_{t\to\infty}\frac{B_t}{t} = 0 \text{ a.s.}$$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Argue that the process $X_t := \int_0^t B_sds$ exists. Show that it is a Gaussian Process, state its mean, variance and Covariance Function.
-\end{tcolorbox}
-\textbf{Proof.}
-
-\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Show that the zeroes of Brownian Motion for an uncountable set which has zero measure $\mathbb{P}$ - almost surely.
 \end{tcolorbox}
 \textbf{Proof.}
 
@@ -368,6 +380,12 @@ so,
     &= P(B_{t}\geq 2y-x) \\
     &= 1 - \Phi\left(\frac{2y-x}{\sqrt{t}}\right)
 \end{align*}
+As we are required to obtain the density, we now applying differentiation
+\begin{align*}
+    f_{M_t, B_t}(y,x) = \frac{\partial^2}{\partial y\partial x}\left[-\Phi\left(\frac{2y-x}{\sqrt{t}}\right)\right] &= \frac{\partial}{\partial y}\left[\frac{1}{\sqrt{t}}\phi\left(\frac{2y-x}{\sqrt{t}}\right)\right] \\
+    &= \sqrt{\frac{2}{\pi}}\frac{(2y-x)}{t^{3/2}}\exp\left(-\frac{1}{2t}(2y-x)^2\right)
+\end{align*}
+Which is defined for $y\geq 0$ and $x\leq y$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $B_t$ be a standard Brownian Motion. Show that $\text{Cov}(B_t,B_s) = \min\{s,t\}$ and deduce the correlation coefficient of $B_s$ and $B_t$ is $$\rho=\sqrt{\frac{\min\{s,t\}}{\max\{s,t\}}}$$
@@ -457,6 +475,27 @@ Which after taking expectation, we are left with $\mathbb{E}[B_s^3].$ For the se
 which vanishes after taking expectation. Thus we are left with 
 $$\mathbb{E}[B_sB_tB_u] = \mathbb{E}[B_s^3]=0$$
 Since it is an odd moment of a $N(0,s)$ Gaussian distribution.
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $0 < t_1 < s < t_2$. Find the conditional distribution of $B_s$ given $B_{t_1} = B_{t_2} = 0$.
+\end{tcolorbox}
+\textbf{Solution.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+    \textbf{Question:} Let $T_x :=\inf\{s\leq t: B_s=x\}$. Show that the probability density of $T_x$ is given by
+    $$f_{T_x}(t) = \frac{|x|}{\sqrt{2\pi}} t^{-3/2} e^{\frac{-x^2}{2t}}$$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+    \textbf{Question:} Show that 
+    $$P(B_s>0,B_t>0) = \frac{1}{4} + \frac{1}{2\pi}\arcsin{\sqrt{\frac{s}{t}}} \quad s<t$$
+\end{tcolorbox}
+\textbf{Proof.}
+
+
 \newpage
 \section{Brownian Motion Calculus}
 
@@ -639,9 +678,17 @@ So $\int_0^tW_sds\sim N(0,t^3/3)$. $\square$
 \section{Stochastic Differential Equations}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Let $\Phi$ be the standard normal cumulative distribution functoin. Show that the process $$X_t := \Phi(\frac{B_t}{\sqrt{T-t}})$$ for $0\leq t<T$ is a martingale for a fixed $T$.
+\textbf{Question:} Let $\Phi$ be the standard normal cumulative distribution functoin. Show that the process $$X_t := \Phi\left(\frac{B_t}{\sqrt{T-t}}\right)$$ for $0\leq t<T$ is a martingale for a fixed $T$.
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} We apply Itô's lemma to the function $f(x,t) = \Phi(\frac{x}{\sqrt{T-t}})$. The partial derivatives are 
+\begin{align*}
+    & \frac{\partial f}{\partial x} = \frac{1}{\sqrt{T-t}} \phi\left(\frac{x}{\sqrt{T-t}}\right) \\
+    & \frac{\partial^2 f}{\partial x^2} = - \frac{x}{(T-t)^{\frac{3}{2}}} \phi\left(\frac{x}{\sqrt{T-t}}\right) \quad\quad \text{(using $\phi^\prime(x) = -x\phi(x)$)} \\
+    & \frac{\partial f}{\partial t} = -\frac{x}{(T-t)^{\frac{3}{2}}}\phi\left(\frac{x}{\sqrt{T-t}}\right)
+\end{align*}
+From the above, we see the term $dt$ term in $df(B_t,t)$ will vanish, so we are left with 
+$$df(B_t,t) = \frac{1}{\sqrt{T-t}} \phi\left(\frac{B_t}{\sqrt{T-t}}\right)dB_t$$
+Thus, $X_t$ is a martingale. $\square$
 
 
 
@@ -665,7 +712,13 @@ Which completes the Proof. $\square$
 \textbf{Question:} Show that the solution to the \textit{Ornstein-Uhlenbeck} Process $dX_t = -\alpha X_tdt + \sigma dB_t$ is given by 
 $$X_t = e^{-\alpha t}\left(X_0 + \int_0^t\sigma e^{\alpha s}dB_s\right)$$
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} Apply Itô's lemma to $Y_t := e^{\alpha t} X_t$ 
+\begin{align*}
+    df(B_t, t) &= e^{\alpha t}(-\alpha X_tdt + \sigma dB_t) + \alpha e^{\alpha t}X_t dt \\
+               &= \sigma e^{\alpha t} dB_t
+\end{align*}
+set $dX_t = df(B_t,t)$ and integrate both sides to find 
+$$X_t = e^{-\alpha t}\left(X_0 + \int_0^t e^{\alpha s}dB_s\right)$$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that the unique solution to $dU_t = U_tdX_t$ is given by 
@@ -790,6 +843,15 @@ Comment on whether or not it is a diffusion type SDE.
 \end{tcolorbox}
 \textbf{Solution.}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Find the stochastic logarithm of $X_t = \exp(B_t + t)$
+\end{tcolorbox}
+\textbf{Solution.} The stochastic logarithm is given by 
+$$\mathcal{L}(X_t) = \int_0^t \frac{dX_t}{X_t}$$
+Through Itô's formula we find $dX_t = X_t(dB_t + 3/2dt)$. Thus 
+\begin{align*}
+    \mathcal{L}(X_t) = \int_0^tdB_t + \int_0^t\frac{3}{2}dt = B_t + \frac{3}{2}t
+\end{align*}
 
 \newpage
 \section{Diffusion Processes}
@@ -801,7 +863,9 @@ Diffusion processes are the solutions of Stochastic Differential Equations. The 
 $$f_k(x,t) := \frac{d^k}{du^k}\exp(ux-u^2t/2)$$
 also solves the backward equation for Brownian Motion.
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} We consider the backward equation for Brownian Motion. That is, the process $X_t = B_t\implies dX_t=dB_t\implies\mu(X_t,t)=0,\sigma(X_t,t)=1$. The backwards equation is therefore
+$$\frac{\partial f}{\partial s}(x,s) + \frac{1}{2}\frac{\partial^2 f}{\partial x^2}(x,s) \quad\quad (1)$$
+Taking the partial derivatives of $f(x,s) = \exp(xu - u^2t/2)$ we see that the PDE in $(1)$ is satisfied. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $\{X_t\}$ be a diffusion with $\mu(x) = 2x$ and $\sigma^2(x) = 4x$. Write the generator, solve $Lf=0$ and find a martingale.  
@@ -810,18 +874,30 @@ also solves the backward equation for Brownian Motion.
 $$Lf(x) = 2x f^\prime(x) + 2xf^{\prime\prime}(x)$$
 Setting $Lf=0$ and rearranging we find $f^{\prime \prime}(x) = -f^\prime(x)$. One can do some \textit{correct} things by applying some ODE theorems, but this isn't a class in Differential Calculus so I prefer to just notice that it has to be of the form $f(x) = e^{-x}$. One can easily verify this. Once accounting for possible constants we are left with 
 $$f(x) = C_0 + C_1e^{-x}$$
-as the solution. 
+as the solution. To find a martingale, we know that if $\frac{\partial f}{\partial t} + L_f=0$ then the process is a martingale. From here, we deduce that $M_t := e^{-X_t}$ is a martingale. $\square$
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find an $f$ such that $f(B_t + t)$ is a martingale
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} Let $X_t = B_t +t\implies dX_t=dB_t+dt$. For $f(X_t)$ to be a martingale we require $df(X_t)$ to have zero drift. By Itô's lemma we must have
+$$df(X_t) = \left(f^\prime(X_t) +\frac{1}{2}f^{\prime\prime}(X_t)\right)dt + f^\prime(X_t)dB_t$$
+So in order for $0$ drift we must have 
+$$f^\prime(X_t) = -\frac{1}{2}f^{\prime\prime}(X_t)$$
+From here, we see that $f(x) = C_0e^{-2x} + C_1$ satisfies the above differential equation. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $X_t$ be a diffusion with coefficients $\mu(x,t)$ and $\sigma(x,t)$. Find a differential equation for $f(x,t)$ such that $Y_t = f(X_t,t)$ has infintesimal diffusion coefficient equal to 1. 
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} $dX_t = \mu(X_t,t)dt + \sigma(X_t,t)dB_t$. By Itô's lemma
+\begin{align*}
+    df(X_t,t) = \frac{\partial}{\partial x} f(X_t,t)\sigma(X_t,t)dB_t + \text{$dt$ terms}
+\end{align*}
+Since we want the infintesimal coefficient to be equal to one we set 
+$$\frac{\partial}{\partial x} f(X_t,t)\sigma(X_t,t) = 1$$
+which gives the PDE
+$$\frac{\partial}{\partial x} f(X_t,t)= \frac{1}{\sigma(X_t,t)}$$
+$\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Suppose that $X_t$ is a diffusion with coefficients $\mu(x) = cx$ and $\sigma(x)=1$. Give its generator and show that $X_t^2-2c\int_0^tX_s^2ds-t$ for $t\geq0$ is a Martingale.
@@ -832,6 +908,8 @@ as the solution.
 \textbf{Question:} Suppose $X_t$ is a diffusion process. Find the SDE for the process $Y_t = \sqrt{X_t}$ and give the generator for $Y_t$.
 \end{tcolorbox}
 \textbf{Solution.}
+
+\todo{Check this in consult. See P-Set 8}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} The following is a multipart problem. A diffusion process is given by the following SDE 
@@ -847,6 +925,12 @@ $$dX_t = \mu(X_t,t)dt + \sigma(X_t,t)dB_t$$
 \end{tcolorbox}
 \textbf{Solution.} \\
 (a) The generator is defined as
+$$L_s = \frac{\partial}{\partial x}f(x,s)\mu(x,s) + \frac{1}{2}\frac{\partial^2}{\partial x^2}f(x,s)\sigma(x,s).$$
+(b) By Itô's formula, this can be written compactly as 
+$$df(X_t,t) = \left(\frac{\partial f}{\partial t}(X_t,t) + L_t(X_t,t)\right)dt + \frac{\sigma(X_t,t)^2}{2}\frac{\partial^2 f}{\partial x^2}(X_t,t)dB_t$$
+(c) The intuition is that $$dM_f(t) = df(X_t,t) - (L_tf+\frac{\partial f}{\partial t})(X_t,t)dt$$ 
+should not contain any drift, and therefore should have no $dt$ term. From part (b) we see that for a function $f\in C^{2,1}$ the drift term in $df(X_t,t)$ will be precisely $(L_tf+\frac{\partial f}{\partial t})(X_t,t)dt$. Thus $M_f(t)$ effectively \textit{cancels} this drift, resulting in a Martingale. \\
+(d)
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -858,8 +942,22 @@ set $P(y,t,x) := \mathbb{P}(X_t\leq y|X_0=x)$ and assume that $p(y,t,x)=\frac{\p
 \end{enumerate}
 \end{tcolorbox}
 \textbf{Solution.} \\
-(a) The generator is defined as
+(a) 
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Give the generator for the Ornstein-Uhlenbeck process. Write the backward equation and give its fundamental solution.
+\end{tcolorbox}
+\textbf{Solution.} For this exercise we assume that $dX_t = -\alpha X_tdt + \sigma dB_t$. By applying Ito's lemma to $f(X_t,t)= e^{\alpha t}X_t$ we find the solution to the SDE is 
+$$X_t = e^{-\alpha t}\left(X_0 + \int_0^te^{-\alpha s}dB_s\right)\quad\quad(1)$$
+From the definition of $dX_t$ we see that the generator for the process is
+$$\frac{\partial f}{\partial x^2}\frac{\sigma^2}{2} - \alpha x\frac{\partial f}{\partial x}$$
+The fundamental solution is given by 
+$$\frac{\partial}{\partial y}\mathbb{P}(X_t\leq y | X_0=x)$$
+Given the form of $X_t$ in $(1)$ it is straightforward to calculate this. Note that $X_t$ is an Itô Integral, so $X_t | X_0=x\sim N(e^{-\alpha t}x, \frac{\sigma^2}{2\alpha}(1-e^{-2\alpha t}))$. Thus, 
+\begin{align*}
+    \frac{\partial}{\partial y}\mathbb{P}(X_t\leq y | X_0=x) &= \frac{\partial}{\partial y}\Phi\left(\frac{y-e^{-\alpha t}x}{\sqrt{\frac{\sigma^2}{2\alpha}(1-e^{-2\alpha t})}}\right) \\
+    &= \frac{1}{\sqrt{\frac{\sigma^2}{2\alpha}(1-e^{-2\alpha t})}}\phi\left(\frac{y-e^{-\alpha t}x}{\sqrt{\frac{\sigma^2}{2\alpha}(1-e^{-2\alpha t})}}\right)
+\end{align*}
 
 
 \newpage
@@ -868,20 +966,117 @@ set $P(y,t,x) := \mathbb{P}(X_t\leq y|X_0=x)$ and assume that $p(y,t,x)=\frac{\p
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that if $Q$ is equivalent to $P$ and $X\geq0$ then $E_PX > 0 $ implies $E_QX>0$ and vice-versa. 
 \end{tcolorbox}
-\textbf{Proof.} 
+\textbf{Proof.} Since $Q\sim P$ then there exists a Radon-Nikodym derivative $\Lambda>0$. Recall that 
+$$\mathbb{E}_QX = \mathbb{E}_P\Lambda X$$
+Suppose $\mathbb{E}_PX >0$ then there exists a set $A$ such that $X(\omega)>0$ on $A$ and $P(A)>0$. We then have
+$$\mathbb{E}_QX = \mathbb{E}_P\Lambda X \geq \mathbb{E}_P\Lambda X\cdot1_A>0$$
+On the converse, suppose $\mathbb{E}_Q X> 0$ Then $\mathbb{E}_P\Lambda X>0$ and since $\Lambda > 0$ and $X\geq 0$ we must have $X>0$ ona a set of positive $P$-measure and we conclude $\mathbb{E}_PX>0$ as well. $\square$
 
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Define $W_t = \mu t + B_t$ for a $\mathbb{P}$-Brownian Motion $B_t$. Define $W_t^*:=\max_{s\leq t} W_s$. Find the distribution of $W_t^*$
 \end{tcolorbox}
-\textbf{Solution.} The intuition is that we can't follow the same argument for finding the maximum of Brownian Motion, as $W_t$ is no longer a martingale. Instead, we'll apply a change of Measure to swap to probability measure where it is a martingale. 
+\textbf{Solution.} The intuition is that we can't follow the same argument for finding the maximum of Brownian Motion, as $W_t$ is no longer a martingale. Instead, we'll apply a change of Measure to swap to an equivalent probability measure where $\mathbb{Q}$ it is a regular Brownian Motion, and then change back to $\mathbb{P}$-measure. \\
+\\
+The first step is to apply Girsanov's theorem to identify that 
+$$\Lambda = \frac{d\mathbb{Q}}{d\mathbb{P}} = \exp\left(-\mu B_t -\frac{\mu^2 t}{2}\right)$$
+defines the appropriate Radon-Nikodym derivative to swap to an equivalent measure $\mathbb{Q}$ that removes the drift from $W_t$. Since $W_t$ is a $\mathbb{Q}$-Brownian Motion, we can apply our earlier results to find\footnote{See joint distribution of Brownian Motion and its maximum in Chapter 3.}
+\begin{align*}
+    \mathbb{Q}(\max_{s\leq t} W_t\geq y, W_t\leq x) &= 1-\Phi\left(\frac{2y-x}{\sqrt{t}}\right)
+\end{align*}
+We can obtain the $\mathbb{Q}$-density by differentiating
+\begin{align*}
+    q_{\max W_t, W_t}(y,x) &= \frac{\partial}{\partial y\partial x} \left[1-\Phi\left(\frac{2y-x}{\sqrt{t}}\right)\right] \\
+    &= \sqrt{\frac{2}{\pi}}\frac{2y-x}{t^{3/2}}\exp\left(-\frac{1}{t}(2y-x)^2\right)
+\end{align*}
+Which is of course defined for $y\geq 0, x\leq y$. We now need to swap back to $\mathbb{P}$-measure and integrate out $W_t$ to find a density for $\max_{s\leq t} W_s$. Define $A = \{x\leq y: M_t{\leq y, B_{t}\leq x}\}$ then 
+\begin{align*}
+    p_{\max_{s\leq t}W_s}(y) = \int_Ad\mathbb{P} &= \int_A\Lambda^{-1}d\mathbb{Q} \\
+    &= \int_{-\infty}^{x}\Lambda^{-1}q_{\max W_t, W_t}(x,y)dx.
+\end{align*}
+A subtle, but important point is that $\Lambda^{-1} = \frac{d\mathbb{P}}{d\mathbb{Q}}$, is for swapping from $\mathbb{Q}$ to $\mathbb{P}$, so it must be expressed in terms of the $\mathbb{Q}$-Brownian Motion
+\begin{align*}
+    \Lambda^{-1} = \exp\left(\mu B_t^\mathbb{P} - \frac{\mu^2 t}{2}\right) &= \exp\left(\mu (W_t-\mu t) + \frac{\mu^2 t}{2}\right) \\
+    &=\exp\left(\mu W_t - \frac{\mu^2 t}{2}\right).
+\end{align*}
+Thus the density can be written as 
+$$p_{\max_{s\leq t}W_s}(y) = \int_{-\infty}^x \exp\left(\mu x - \frac{\mu^2 t}{2}\right)\sqrt{\frac{2}{\pi}}\frac{2y-x}{t^{3/2}}\exp\left(-\frac{1}{t}(2y-x)^2\right)dx$$
+By setting $z:= 2y-x \implies dx=-dz$ one can massage the above into a nicer form. $\square$
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Give the Radon-Nikodym Derivative in the change to the EMM $\mathbb{Q}$ in the Black-Scholes model. 
 \end{tcolorbox}
-\textbf{Solution.} 
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $\mathbb{P}$ and $\mathbb{Q}$ be probability measures induced by $N(\mu_1,1)$ and $N(\mu_2,1)$ respectively. Show that $\mathbb{P}\sim\mathbb{Q}$. Find $\frac{d\mathbb{Q}}{d\mathbb{P}}$ and $\frac{d\mathbb{P}}{d\mathbb{Q}}$.
+\end{tcolorbox}
+\textbf{Solution.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that if a random variable $X$ on $(\Omega, \mathcal{F}, \mathbb{P})$ follows a $N(\mu,1)$ distribution, then show there is an equivalent measure $\mathbb{Q}$ such that $X$ follows a $N(0,1)$ distribution on $(\Omega, \mathcal{F},\mathbb{Q}).$ State the Radon-Nikodym derivatives $\frac{d\mathbb{Q}}{d\mathbb{P}}$ and $\frac{d\mathbb{P}}{d\mathbb{Q}}$. What distribution does $Y:=X-\mu$ follow under $\mathbb{Q}$?
+\end{tcolorbox}
+\textbf{Solution.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} A random variable $Y$ has lognormal LN$(\mu,\sigma^2)$
+distribution under probability measure $P$. Let $\Lambda = Y/E_P[Y]$ so that $dQ(\omega) = \Lambda(Y(\omega))dP(\omega)$. 
+\begin{enumerate}[label=(\alph*)]
+    \item Write $E_P[Y\cdot 1_{Y>K}]$ in terms of $Q(Y>K)$
+    \item Let $X := \ln Y$ find the distribution of $X$ under $Q$. 
+    \item Now find $E_P[Y\cdot 1_{Y>K}]$ in terms of the CDF of $X$ from part (b)
+\end{enumerate}
+\end{tcolorbox}
+\textbf{Solution.} \\
+(a) We have 
+\begin{align*}
+    E_P[Y \cdot 1_{Y>K}] = E_Q[\Lambda^{-1} Y \cdot1_{Y>K}] &= E_P[E_P[Y]\cdot 1_{Y>K}] \\
+    &=E_P[Y]Q(Y>K)
+\end{align*}
+since $Y\sim\text{LN}(\mu,\sigma^2)$ one can write $E_P[Y\cdot1_{Y>K}] = e^{\mu+\frac{\sigma^2}{2}}Q(Y>K)$. $\square$ \\
+\\
+(b) Consider the moment generating function $Ee^{uX}$ to identify the distribution of $X$. Under $Q$
+\begin{align*}
+    E_Qe^{uX} = E_P\Lambda e^{uX} = e^{-\mu-\frac{\sigma^2}{2}} E_P Y e^{uX}
+\end{align*} 
+Since $Y = e^X$ in $P$ we write 
+\begin{align*}
+    e^{-\mu-\frac{\sigma^2}{2}} E_P Y e^{uX} &= e^{-\mu-\frac{\sigma^2}{2}} E_P e^{(u+1)X} \\
+    &= e^{-\mu-\frac{\sigma^2}{2}} e^{\mu(u+1) + \frac{\sigma^2}{2}(u+1)^2} \\
+    &= e^{(\mu+\sigma^2)u + \frac{\sigma^2}{2}u^2}
+\end{align*} 
+Which matches the moment generating function of a $N(\mu+\sigma^2, \sigma^2)$ distribution. $\square$ \\
+\\
+(c) Since $E_P[Y\cdot1_{Y>K}] = e^{\mu+\frac{\sigma^2}{2}}Q(Y>K)$ and $Y\sim \text{LN}(\mu+\sigma^2,\sigma^2)$ in $Q$ we can write 
+\begin{align*}
+    Q(Y>K) = Q(X>\ln K)  &= Q\left(Z>\frac{\ln K-\mu-\sigma^2}{\sigma}\right)
+\end{align*}
+Using $1-\Phi(x) = \Phi(-x)$ where $\Phi$ denotes the normal CDF, we can write 
+$$E_P[Y\cdot1_{Y>K}] = e^{\mu+\sigma^2/2}\Phi\left(\frac{\mu+\sigma^2-\ln K}{\sigma}\right)$$
+ 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t = B_t + \sin(t)$, for a $P$-Brownian Motion. Let $Q\sim P$ be another probability measure such that $X_t$ is a Q-Brownian Motion. Find $\Lambda = \frac{dQ}{dP}$.
+\end{tcolorbox}
+\textbf{Solution.} we have $dX_t = dB_t + \cos(t)dt$. We require $dX_t$ be a martingale under $Q$. Girsanov Theorem gives us an explicit form for the Radon-Nikodym derivative to remove the drift of $dX_t$ under $Q$. Let $\theta _t := \cos(t)$ then 
+\begin{align*}
+    \Lambda &= \exp\left(-\int_0^t\theta_sdB_s - \frac{1}{2}\int_0^t\theta_s^2ds\right) \\
+    &= \exp\left(-\int_0^t \cos sdB_s - \frac{1}{2}\int_0^t\cos^2s ds\right)
+\end{align*}
+Defines the Radon-Nikdoym derivative that transforms $X_t$ to a $Q$-Brownian Motion. $\square$
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t = B_t + t^2$, for a $P$-Brownian Motion. Let $Q\sim P$ be another probability measure such that $X_t$ is a Q-Brownian Motion. Find $\Lambda = \frac{dQ}{dP}$.
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t = B_t + \int_0^t B_sds$, for a $P$-Brownian Motion. Let $Q\sim P$ be another probability measure such that $X_t$ is a Q-Brownian Motion. Find $\Lambda = \frac{dQ}{dP}$.
+\end{tcolorbox}
+\textbf{Solution.}
 
 
 
@@ -929,7 +1124,9 @@ equal to each other.
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Define the discounted price process. Show that in the Black-Scholes model, the discounted price-process is a martingale if and only if $\mu = r$.
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} The discounted stock price process is given by $Z_t := e^{-rt}S_t$. By Applying Ito's formula to $f(x,t) = e^{-rt}x$ we see that 
+$$dZ_t = e^{-rt}S_t(\sigma dB_t + (\mu-r)dt)$$
+In order for $Z_t$ to be a martingale, it must be driftless which we see is only possible if and only if $\mu = r$ vanishing the $dt$ term.
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
