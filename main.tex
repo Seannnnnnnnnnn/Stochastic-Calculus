@@ -41,18 +41,45 @@
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that if $f$ has finite variation on an $[a,b]$ then $f$ must be bounded on $[a,b]$
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} Let $V^f([a,b]) = V<\infty$. Let $x\in(a,b)$ then since $V^f$ is increasing we have 
+\begin{align*}
+    |f(x)-f(b)| \leq V^f([x,b]) \leq V^f([a,b]) < V
+\end{align*}
+By the triangle inequality we therefore have $|f(x)|\leq V+|f(b)|$ which implies $f$ is bounded on $[a,b].$ $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that if $f$ is monotone on $[a,b]$ then $V^f([a,b]) = |f(b)-f(a)|$
 \end{tcolorbox}
-\textbf{Proof.}
-
+\textbf{Proof.} Suppose $f$ is increasing. Then $f(t_i) < f(t_{i+1})$ for all possible partitions $\Pi$. We therefore have
+\begin{align*}
+    V^f([a,b]) = \sup_{\Pi}\sum_{{i=0}}^{n}|f(t_{i+1}) - f(t_i)| &= \sup_{\Pi}\sum_{{i=0}}^{n}f(t_{i+1}) - f(t_i) \\
+    &= f(b) - f(a)
+\end{align*}
+Analogously for $f\searrow$ we have $f(t_i) > f(t_{i+1})$ so for any possible partition we have
+\begin{align*}
+    V^f([a,b]) = \sup_{\Pi}\sum_{{i=0}}^{n}|f(t_{i+1}) - f(t_i)| = f(a) - f(b)
+\end{align*}
+Combine both casses and we have the claim $\square$.
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $g(x) = \sin x + \sqrt{3}\cos x$ on $0\leq x \leq \pi$. Find the variance of $g$ and a Jordan Decomposition of $g$.
 \end{tcolorbox}
 \textbf{Proof.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Five a function $h$ on [0,1] and sequence of partitions $0 = t_0^n < ... < t_n^n=1$ with $\max |t_i^n - t_{i-1}^n| \to 0$ as $n \to \infty$ such that $$V^h([0,1]) > \lim_{n\to\infty} \sum_{i=1}^{n}|h(t_{i}) - h(t_{i-1})|$$
+\end{tcolorbox}
+\textbf{Solution.}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that a function of finite variation can only have countably many jumps
+\end{tcolorbox}
+\textbf{Proof.} Let $g$ be a function of finite variation. Recall that a \textit{jump} is a point $t\in[a,b]$ such that $g(t-) \neq g(t+)$. Let $\mathcal{D}$ be the set of all points of jump points on $[a,b]$. Then the total variation on $[a,b]$ must be greater than the variation at each jump point. That is, 
+$$V^g([a,b])\geq \sum_{t\in\mathcal{D}}|g(t) - g(t-)|$$
+Now, if $\mathcal{D}$ is uncountable, then the right hand side becomes an uncountable sum of positive values, diverging to infinity, and thus we would have $V^g([a,b])=\infty$ which contradicts our assumption of $g$ having finite variation. $\square$
+
+
+
 
 
 \newpage
@@ -250,11 +277,13 @@ Thus with probability 1, we conclude that $B_t$ is nowhere differentiable. $\squ
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} (Fractal Scaling Property of Brownian Motion) Show that for any fixed $a>0$  the process $X_t = aB_{t/a^2}$ is itself a Brownian Motion.  
 \end{tcolorbox}
-\textbf{Proof.} We show that each of the Brownian Motion properties is satisfied. \\
-\\
-\text{Continuity}: $t\mapsto aB_{t/a^2}$ is a continuous. \\
-\text{Normal Increments}: Let $s<t$ then $X_t - X_s = a(B_{t/a^2} - B_{s/a^2}) \stackrel{d}{=} N(0,a^2(t-s)/a^2) = N(0,t-s).$
-Independent Increments: Inherited from $B_{t/a^2}$
+\textbf{Proof.} $X_t$ is clearly a Gaussian Process, as $B_{t/a^2}$ is a Gaussian Process. The Covariance function satisfies 
+\begin{align*}
+    \text{Cov}(X_t,X_s) = \mathbb{E}X_tX_s &= a^2\mathbb{E}B_{t/a^2}B_{s/a^2} \\
+    &= a^2\min(t/a^2, s/a^2) \\
+    &= \min(t,s)
+\end{align*}
+Thus, since $X_t$ is a Gaussian Process with covariance function $\min(t,s)$ we conclude that $X_t$ is a Brownian Motion. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} State and Prove the Markov Property for Brownian Motion.
@@ -275,6 +304,12 @@ To see that Brownian Motion satisfies the Markov Property let $s <t$ and conside
     & E[B_s | B_t=b] = \frac{s}{t}b \\
     &\text{Var}(B_s | B_t=b) = s-\frac{s^2}{t} = \frac{s(t-s)}{t}
 \end{align*}
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+
+\textbf{Question:} Let $u<s < t$, find the distribution of $B_s | B_u=a,B_t = b$.
+\end{tcolorbox}
+\textbf{Solution.} 
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -309,7 +344,17 @@ $$\lim_{t\to\infty}\frac{B_t}{t} = 0 \text{ a.s.}$$
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Argue that the process $X_t := \int_0^t B_sds$ exists. Show that it is a Gaussian Process, state its mean, variance and Covariance Function.
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} First note that $\int_0^t B_sds$ is not an Itô integral, but a regular Riemann Integral. Since the map $t\mapsto B_t$ is continuous, it is Riemann Integrable, making $X_t$ well defined. To see that $X_t$ is a Gaussian Process, we have from the definition of Riemann Integration
+$$\int_0^t B_sds = \lim_{n\to\infty}\sum_{i=1}^{n}B_{t_i}\Delta t_i$$
+Since $B_{t_i}$ is a Gaussian Process and Gaussian Process's are conserved under the limit, we conclude that $X_t$ is a Gaussian Process too. For the mean, by linearity of expectation we have 
+$$\mathbb{E}X_t = \int_0^t\mathbb{E}B_sds = 0$$
+Therefore, the variance is now just the second moment so 
+$$\mathbb{E}X_t^2 = \int_0^t\int_0^t\mathbb{E}B_sB_rdsdr = \int_0^t\int_0^t\min(s,r)dsdr$$
+The integral is symmetric over the region $[0,t]$ so we can take $s<r$ and evaluate the integral as
+\begin{align*}
+    \int_0^t\int_0^t\min(s,r)dsdr = 2\int_0^t\int_0^r sdsdr = \frac{t^3}{3}
+\end{align*}
+Finally, we evaluate the covariance function$
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -475,11 +520,6 @@ Which after taking expectation, we are left with $\mathbb{E}[B_s^3].$ For the se
 which vanishes after taking expectation. Thus we are left with 
 $$\mathbb{E}[B_sB_tB_u] = \mathbb{E}[B_s^3]=0$$
 Since it is an odd moment of a $N(0,s)$ Gaussian distribution.
-
-\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Let $0 < t_1 < s < t_2$. Find the conditional distribution of $B_s$ given $B_{t_1} = B_{t_2} = 0$.
-\end{tcolorbox}
-\textbf{Solution.}
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -869,6 +909,11 @@ Through Itô's formula we find $dX_t = X_t(dB_t + 3/2dt)$. Thus
     \mathcal{L}(X_t) = \int_0^tdB_t + \int_0^t\frac{3}{2}dt = B_t + \frac{3}{2}t
 \end{align*}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Show that the solution to the stochastic exponential SDE is unique.
+\end{tcolorbox}
+\textbf{Proof.}
+
 \newpage
 \section{Diffusion Processes}
 
@@ -975,6 +1020,30 @@ Given the form of $X_t$ in $(1)$ it is straightforward to calculate this. Note t
     &= \frac{1}{\sqrt{\frac{\sigma^2}{2\alpha}(1-e^{-2\alpha t})}}\phi\left(\frac{y-e^{-\alpha t}x}{\sqrt{\frac{\sigma^2}{2\alpha}(1-e^{-2\alpha t})}}\right)
 \end{align*}
 
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Let $X_t$ be a diffusion process with $\sigma(X_t) = 1$ and 
+\[\mu(X_t) = \begin{cases}
+    -1 & x>0 \\
+    +1 & x<0 \\
+    0 & \text{otherwise.}
+\end{cases}\]
+Show that $\pi(x) = e^{-2 |x|}$ is a stationary distribution of $X_t$.
+\end{tcolorbox}
+\textbf{Proof.}
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Give a probabilistic representation of the soltuion $f(x,t)$ to the PDE
+$$\frac{1}{2}\frac{\partial^2 f}{\partial x^2} + \frac{\partial f}{\partial t} =0 \quad 0\leq t\leq T\quad f(x,T)=x^2$$
+Then solve the PDE using the corresponding solution to the SDE.
+\end{tcolorbox}
+\textbf{Solution.} This is an application of Feynman-Kac. The PDE is of the form 
+$$\frac{\partial f }{\partial t} + L_f=0$$
+where $L_f = \frac{1}{2}\frac{\partial^2 f}{\partial x^2}$. Such a generator corresponds to the SDE $dX_t = dB_t$. The Faynmin-Kac formula tells us that the solution to such an SDE is 
+$$f(x,t) = \mathbb{E}[g(X_T) | X_t=x] \quad\quad g(x)=x^2\quad\quad(1)$$
+So the full, corresponding SDE is $dX_t = dB_t$ with $X_t=x$ on $t\leq T$. Solving this SDE we know that $X_T = x + B_T-B_t\sim N(x,T-t)$ so the solution to $(1)$ is:
+$$f(x,t) = \mathbb{E}[X_T^2 | X_t=x] = x^2 + (T-t)$$
+$\square$
 
 \newpage
 \section{Change of Probability Measure}
