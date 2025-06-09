@@ -309,7 +309,12 @@ To see that Brownian Motion satisfies the Markov Property let $s <t$ and conside
 
 \textbf{Question:} Let $u<s < t$, find the distribution of $B_s | B_u=a,B_t = b$.
 \end{tcolorbox}
-\textbf{Solution.} 
+\textbf{Solution.} This is another application of conditional distributions for the Multivariate Normal. Hence
+\begin{align*}
+    & \mathbb{E}[B_s | B_u=a, B_t=b] = \frac{(t-s)a + (u-s)b}{t-u} \\
+    & \text{Var}(B_s | B_u = a, B_t=b) = \frac{(t-s)(s-u)}{t-u}
+\end{align*}
+$$$$
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -526,7 +531,21 @@ Since it is an odd moment of a $N(0,s)$ Gaussian distribution.
     \textbf{Question:} Let $T_x :=\inf\{s\leq t: B_s=x\}$. Show that the probability density of $T_x$ is given by
     $$f_{T_x}(t) = \frac{|x|}{\sqrt{2\pi}} t^{-3/2} e^{\frac{-x^2}{2t}}$$
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} Start with the case where $x>0$. Then $\{T_x\leq t\} = \{M_t\geq x\}$ so by the reflection principle
+\begin{align*}
+    \mathbb{P}(T_x\leq t) = \mathbb{P}(M_t\geq x) &= 2\mathbb{P}(B_t\geq x) \\
+    &= 2(1 - \Phi\left(\left(\frac{x}{\sqrt{t}}\right)\right) \\
+    &= 2\Phi\left(\frac{-x}{\sqrt{t}}\right)
+\end{align*}
+Similar for the case where $x<0$ we have
+\begin{align*}
+    \mathbb{P}(T_x\leq t) = 2\mathbb{P}(B_t < x) = 2\Phi\left(\frac{x}{\sqrt{t}}\right)    
+\end{align*}
+Combining both cases we have $\mathbb{P}(T_x\leq t) = -2\Phi(|x|/\sqrt{t})$ so 
+\begin{align*}
+    f_{T_x}(t) = \frac{\partial \mathbb{P}(T_x\leq t)}{\partial t} &=-2\frac{\partial}{\partial t}\int_{-\infty}^{\frac{|x|}{\sqrt{t}}}\frac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}dz \\
+    &= \frac{|x|}{\sqrt{2\pi}} t^{-3/2} e^{\frac{-x^2}{2t}} \quad\quad \square
+\end{align*}
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -580,16 +599,11 @@ $$\mathbb{E}\left(\int_0^t f(W_s,s)dW_s\right) =0$$
 \end{tcolorbox}
 \textbf{Solution.} This is an Itô integral for a simple, nonstochastic process. By Definition
 \begin{align*}
-    \int_0^3 X_sdB_s &:= -(B_1-B_0) + (B_2-B_1)+2(B_3-B_2) \\ 
-    &= 2B_3 -B_2-2B_1 \\
+    \int_0^3 X_sdB_s &= -(B_1-B_0) + (B_2-B_1)+2(B_3-B_2) \\ 
+    &\stackrel{d}={-N(0,1) + N(0,1) + 2N(0,1)} \\
+    & = N(0,6) \quad \square
 \end{align*}
-We now the distribution will be gaussian with 0 mean. To find the variance we recall Cov$(B_t, B_s) = \min(t,s)$ and so
-\begin{align*}
-    \text{Var}(2B_3 -B_2-2B_1) &= \text{Var}(2B_3) + \text{Var}(B_2) + \text{Var}(2B_1) - 2\text{Cov}(B_3, B_2)-4\text{Cov}(B_3, B_2) +2\text{Cov}(B_2,B_1) \\
-    &= 12 + 2 + 4-4-8+2 \\
-    &= 6
-\end{align*}
-Hence we conclude $\int_0^3X_sdB_s\sim N(0,6).$
+
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -618,7 +632,7 @@ From here, one clearly sees this integral is finite provided $\alpha < 1/2.$ $\s
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find the Stochastic Differential $d(Y_t / Z_t)$ where $Y_t = tB_t$ and $Z_t=e^{B_t}$ using Itô's formula. \cite{Fima}
 \end{tcolorbox}
-\textbf{Solution.} let $f(y,z) = y/z$. 
+\textbf{Solution.} Apply Itô's lemma to $f(y,z) = y/z$. 
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -630,8 +644,18 @@ $$dX_tY_t = Y_tdX_t + X_tdY_t + \sigma_X(t)\sigma_Y(t)dt.$$
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Suppose $X_t = (1-t)\int_0^t\frac{dB_s}{1-s}$, where $0\leq t<1$. Find $dX_t$
 \end{tcolorbox}
-\textbf{Solution.} 
-
+\textbf{Solution.} Apply Itô's formula to $X_t = V_tU_t$ where $V_t = (1-t)$ and $U_t= \int_0^t\frac{dB_s}{1-s}$. We have 
+$$dX_t = V_tdU_t + U_tdV_t+ d[U, V]_t$$
+$U_t$ is deterministic, so the quadratic variation term is 0. The remainder can be evaluated as 
+\begin{align*}
+    & dV_t = -dt \\
+    & dU_t = \frac{dB_t}{1-t}
+\end{align*}
+Then 
+\begin{align*}
+    dX_t &= (1-t)\frac{dB_t}{1-t} -\int_0^t\frac{1}{1-s}dB_sdt \\
+    &= dB_t-\int_0^t\frac{1}{1-s}dB_sdt \quad \square
+\end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find the quadratic variation of $X_t = tB_t$
@@ -717,8 +741,13 @@ So $\int_0^tW_sds\sim N(0,t^3/3)$. $\square$
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $X_t = \int_0^t(t-s)dB_s$. Find $dX_t$ and the quadratic variation $[X,X]_t$. Compare to the Quadratic Variation of Itô Integrals.
 \end{tcolorbox}
-\textbf{Proof.}
-
+\textbf{Proof.} Applying Stochastic Version of Leibniz's integration rule 
+$$dX_t = f(t,t)dB_t + \int_0^t\frac{\partial}{\partial t}f(t,s)dB_sdt$$
+we have 
+\begin{align*}
+    dX_t = 0\cdot dB_t + \int_0^t dB_sdt = B_tdt
+\end{align*}
+The quadratic variation is therefore 0, which is less than or equal that of other Itô integrals. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Show that 
@@ -803,25 +832,53 @@ Thus, the solution to the SDE is
 \textbf{Solution.} It's not a diffusion type SDE as the $dB_t$ term doesn't contain only on $t$ and $X_t$. To solve the SDE, apply Itô's lemma to $f(x,t) = e^{-t}x$ then 
 $$de^{-t}X_t = e^{-t}B_tdB_t$$
 Integrating both sides and rearranging we find 
-$$X_t = e^t\left(X_0 + \int_0^te^{-s}B_sdB_s\right)$$
+$$X_t = e^t\left(X_0 + \int_0^te^{-s}B_sdB_s\right) \quad \square$$
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find $d\mathcal{E}(B_t)^2$ where $\mathcal{E}$ denotes the Stochastic Exponential.
 \end{tcolorbox}
-\textbf{Solution.} Recall that $\mathcal{E}(X_t) = \exp(X_t - X_0 + \frac{1}{2}[X,X]_t)$. So $\mathcal{E}(B_t) = \exp(B_t - t/2).$ We 
+\textbf{Solution.} Recall that $\mathcal{E}(X_t) = \exp(X_t - X_0 + \frac{1}{2}[X,X]_t)$. So $\mathcal{E}^2(B_t) = \exp(2B_t - t).$ We then apply Itô's lemma to $f(x)= e^{2x-t}$ so 
+\begin{align*}
+    d\mathcal{E}^2(B_t) = df(B_t, t) &= 2^{{2B_t-t}}dB_t - e^{2B_t-t}dt + 2e^{B_t-t}dt \\
+    &= \mathcal{E}^2(B_t)(2dB_t + dt) \quad \square
+\end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} For a constant $\theta$ find the SDE for the process $X_t = e^{\theta W_t - \frac{1}{2}\theta^2 t}$. By writing the SDE in integral form calculate $\mathbb{E}[e^{\theta W_t}]$, the moment generating function of the standard Wiener process. 
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} Define $f(x,t) = \exp(\theta x - \theta^2t/2)$, calculate the necessary partial derivatives to find
+\begin{align*}
+    df(W_t,t) &= \theta f(W_t,t)dW_t - \frac{\theta^2}{2}f(W_t,t)dt + \frac{\theta^2}{2}f(W_t,t)dt \\
+    &= \theta f(W_t,t)dW_t
+\end{align*}
+Integrating both sides we find 
+$$e^{\theta W_t} = e^{\frac{\theta^2}{2}t}\left(1 + \int_0^t\theta f(W_s,s)dW_s\right)$$
+The integral term is an Itô integral, so by taking expectations of both sides we find 
+$$\mathbb{E}e^{\theta W_t} = e^{\theta^2t/2}$$
+Which matches the moment generating function for a $N(0,t)$ random variable. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Suppose $X_t$ follows the generalised SDE 
+\textbf{Question:} Suppose $X_t$ follows the generalized SDE 
 $$dX_t = \mu(X_t,t)dt + \sigma(X_t,t)dW_t$$
 Show that $X_t$ is a martingale if $\mu(X_t,t)=0.$
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} Write $X_t = X_0+\int_0^t\mu(X_s,s)ds + \int_0^t\sigma(B_s,s)dB_s$. Let $s>0$ then by splitting up the integrals we have 
+\begin{align*}
+    \mathbb{E}X_{t+s} | \mathcal{F}_t &= X_t + \mathbb{E}\left[\int_t^{t+s} \mu(X_s,s)ds | \mathcal{F}_t\right] \\
+    &= X_t + \int_{t}^{t+s}\mu(X_s, s)ds
+\end{align*}
+So, for the martingale property $\mathbb{E}X_{t+s} | \mathcal{F}_t = X_t$ for all $s,t>0$ we require $\int_t^{t+s}\mu(X_s,s)ds = 0$ which requires $\mu(X_s,s)\equiv0$. $\square$
+
+
+\begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
+\textbf{Question:} Suppose $U_t\neq 0$ for all $t>0$ Show that $\mathcal{L}(\mathcal{E}(U_t)) = U_t$
+\end{tcolorbox}
+\textbf{Proof.} $\mathcal{E}(U_t)$ satisfies $d\mathcal{E}(U_t) = \mathcal{E}(U_t)dU_t$ so
+\begin{align*}
+    \mathcal{L}(\mathcal{E}(U_t)) = \int_0^t \frac{d\mathcal{E}(U_s)}{\mathcal{E}(U_s)} &= \int_0^tdU_s = U_t-U_0
+\end{align*}
+Since we define $\mathcal{E}(U_0)=1$ we set $U_0=0$ and we have the claim. $\square$ 
 
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
@@ -889,15 +946,44 @@ $$\frac{\partial m}{\partial t} = \frac{u^2}{2}\frac{\partial m}{\partial u} + \
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} By defining an appropriate process $V_t, t\geq0$ and letting $X_t = U_tV_t$ solve the SDE
-$$dX_t = (X_t+t)dt + (3X_t+B_t^2)dB_t, \quad X_0=1$$
+$$dX_t = (X_t+t)dt + (3X_t+B_t^2)dB_t, \quad X_0=a$$
 Comment on whether or not it is a diffusion type SDE. 
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} We can immediately deduce that it is not a Diffusion-type SDE, as the diffusion term contains $B_t$. To solve the SDE, first gather the $X_t$ terms
+\begin{align*}
+    dX_t &= X_t dt + 3X_tdB_t + tdt + B_t^2dB_t \\
+    &= X_t(dt + 3dB_t) + tdt+B_t^2dB_t \hspace{10mm} (1)
+\end{align*}
+We want to write $X_t = U_tV_t$. We begin by letting $U_t$ satisfy
+$$dU_t = U_t(dt + 3dB_t) \implies U_t=\exp\left(3B_t -\frac{7}{2}t\right), \quad U_0=1$$
+By applying Itô's lemma to $X_t = U_t V_t$ we have 
+$$dX_t = U_tdV_t + V_tdU_t + d[U,V]_t \hspace{10mm} (2)$$
+we require $(2)$ to match (1) so we set 
+$$V_tU_t(dt + 3dB_t) + tdt+B_t^2dB_t = U_tdV_t + V_tdU_t + d[U,V]_t$$
+Notice that $V_tU_t(dt + 3dB_t) = V_tdU_t$ so canceling this term we are left with 
+\begin{align*}
+    &\hspace{5mm} tdt+B_t^2dB_t = U_tdV_t + d[U,V]_t  \\
+    &\therefore dV_t = \frac{t}{U_t}dt + \frac{B_t^2}{U_t}dB_t - \frac{1}{U_t}d[U,V]_t \hspace{10mm} (3)
+\end{align*}
+$(1)$ is a linear SDE so we assume that $V_t = a_tdt + b_tdB_t$. This means that $d[U,V]_t = dU_tdV_t = 3U_tb_t dt$ Substitue this back into (3) and we have 
+$$dV_t = \left(\frac{t}{U_t} - 3b_t\right)dt + \frac{B_t^2}{U_t}dt$$
+so we see $b_t = B_t^2/U_t$ and therefore 
+$$dV_t = \left(\frac{t-3B_t^2}{U_t}\right)dt + \frac{B_t^2}{U_t}dt$$
+Finally, since $X_0 = a$ then we must have $X_ 0 = U_0V_0 = V_0$ we set $V_0=a$ and therefore
+\begin{align*}
+    & V_t = a + \int_0^t \frac{s-B_s^2}{U_s}ds + \int_0^t \frac{B_s^2}{U_s}dB_s \\
+    & U_t = \exp\left(3B_t-\frac{7}{2}\right)
+\end{align*}
+for $X_t = U_tV_t$. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find the stochastic logarithm of $B_t^2+1$
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} $X_t = B_t^2+1$. Applying Itô's formula to $f(x) = x^2+1$ we find $dX_t = 2B_tdB_t + dt$ The stochastic logarithm is therefore
+\begin{align*}
+    \mathcal{L}(X_t) &= \int_0^t\frac{dX_s}{X_s}  \\
+    &= \int_0^t\frac{2B_s}{B_s^2+1}dB_s + \int_0^t\frac{1}{B_s^2+1}ds \quad \square
+\end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Find the stochastic logarithm of $X_t = \exp(B_t + t)$
@@ -910,9 +996,16 @@ Through Itô's formula we find $dX_t = X_t(dB_t + 3/2dt)$. Thus
 \end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Show that the solution to the stochastic exponential SDE is unique.
+\textbf{Question:} Show that
+$$\int_0^t \frac{dX_s}{X_s} = \ln\left(\frac{X_t}{X_0}\right) + \int_0^t\frac{d[X,X]_2}{2X_s^2}$$
 \end{tcolorbox}
-\textbf{Proof.}
+\textbf{Proof.} Apply Itô's formula to $f(x) = \ln x$ for the process $X_t$. Provided $X_t\neq0$ we have 
+\begin{align*}
+    d\ln X_t = \frac{1}{X_t}dX_t - \frac{1}{2X_t^2}d[X,X]_t
+\end{align*}
+Integrate both sides from $0$ to $t$ we have 
+$$\ln\left(\frac{X_t}{X_0}\right) = \int_0^t \frac{dX_s}{X_s} - \int_0^t\frac{d[X,X]_s}{2X_s^2}$$
+rearrange and we have the claim. $\square $
 
 \newpage
 \section{Diffusion Processes}
@@ -1154,9 +1247,13 @@ $$E_P[Y\cdot1_{Y>K}] = e^{\mu+\sigma^2/2}\Phi\left(\frac{\mu+\sigma^2-\ln K}{\si
 Defines the Radon-Nikdoym derivative that transforms $X_t$ to a $Q$-Brownian Motion. $\square$
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
-\textbf{Question:} Let $X_t = B_t + t^2$, for a $P$-Brownian Motion. Let $Q\sim P$ be another probability measure such that $X_t$ is a Q-Brownian Motion. Find $\Lambda = \frac{dQ}{dP}$.
+c \textbf{Question:} Let $X_t = B_t + t^2$, for a $P$-Brownian Motion. Let $Q\sim P$ be another probability measure such that $X_t$ is a Q-Brownian Motion. Find $\Lambda = \frac{dQ}{dP}$.
 \end{tcolorbox}
-\textbf{Solution.}
+\textbf{Solution.} $dX_t = dB_t + 2tdt$. Set $\theta_t = 2t$ then $\theta_t$ is $\mathcal{F}_t$-measurable so by Girsanov's Theorem, the Radon-Nikodym Derivative is given by 
+\begin{align*}
+    \Lambda &= \exp\left(-\int_0^t2sdB_s - 2\int_0^ts^2ds\right) \\
+    &= \exp\left(-\int_0^t2sdB_s - \frac{2t^3}{3}\right) \quad\quad\square
+\end{align*}
 
 \begin{tcolorbox}[colframe=black,colback=gray!5,boxrule=0.5pt]
 \textbf{Question:} Let $X_t = B_t + \int_0^t B_sds$, for a $P$-Brownian Motion. Let $Q\sim P$ be another probability measure such that $X_t$ is a Q-Brownian Motion. Find $\Lambda = \frac{dQ}{dP}$.
